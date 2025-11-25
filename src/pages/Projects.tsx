@@ -190,7 +190,8 @@ const Projects = () => {
           <div className="min-w-0">
             <h3 className="font-semibold text-lg text-terminal-text truncate">{project.name}</h3>
             {project.currentDesc && (
-              <p className="text-terminal-dim text-sm mt-1 truncate">{project.currentDesc}</p>
+              // allow current description to wrap to next line(s) on narrow screens
+              <p className="text-terminal-dim text-sm mt-1 whitespace-normal break-words">{project.currentDesc}</p>
             )}
           </div>
         </div>
