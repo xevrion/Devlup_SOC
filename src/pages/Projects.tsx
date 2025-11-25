@@ -2,6 +2,7 @@ import React from 'react';
 import { useTerminal } from '../context/TerminalContext';
 import ProjectCard from '../components/ProjectCard';
 import TerminalHeader from '../components/TerminalHeader';
+import RepoSocialPreview from '../components/RepoSocialPreview';
 import { Search, Filter, X, FileText, Github, ExternalLink, Mail, Linkedin } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -81,10 +82,24 @@ const Projects = () => {
     const timeoutRef = React.useRef<number | null>(null);
 
     // Domains known to block framing (will refuse to connect). If domain is blocked,
-    // skip attempting an iframe and immediately show the fallback.
+    // skip attempting an iframe and immediately show the fallback. Note: github is
+    // handled specially to show a social-thumbnail instead of an attempted iframe.
     const blockedDomains = React.useMemo(() => new Set([
-      'github.com', 'gitlab.com', 'youtube.com', 'docs.google.com', 'drive.google.com', 'linkedin.com', 'medium.com'
+      'gitlab.com', 'youtube.com', 'docs.google.com', 'drive.google.com', 'linkedin.com', 'medium.com'
     ]), []);
+
+    // quick detection if url points to a github repo (owner/repo)
+    const isGithubRepo = React.useMemo(() => {
+      if (!normalized) return false;
+      try {
+        const u = new URL(normalized);
+        if (!u.hostname.includes('github.com')) return false;
+        const parts = u.pathname.replace(/^\//, '').split('/').filter(Boolean);
+        return parts.length >= 2;
+      } catch (e) {
+        return false;
+      }
+    }, [normalized]);
 
     React.useEffect(() => {
       setLoaded(false);
@@ -93,6 +108,8 @@ const Projects = () => {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = null;
       }
+
+      if (!normalized || isGithubRepo) return;
 
       // quick domain check
       let domain = '';
@@ -119,7 +136,16 @@ const Projects = () => {
           timeoutRef.current = null;
         }
       };
-    }, [normalized, blockedDomains]);
+    }, [normalized, blockedDomains, isGithubRepo]);
+
+    // If it's a GitHub repo, render the social-preview thumbnail instead of an iframe
+    if (isGithubRepo && normalized) {
+      return (
+        <div className="border border-terminal-dim rounded overflow-hidden" style={{ minHeight: 200 }}>
+          <RepoSocialPreview repoUrl={normalized} className="w-full h-64 object-cover" />
+        </div>
+      );
+    }
 
     return (
       <div>
