@@ -43,13 +43,15 @@ const Projects = () => {
   // Selected tab (Ongoing / Completed / Archived) derived from URL
   const navigate = useNavigate();
   const location = useLocation();
+  const showArchived = import.meta.env.VITE_SHOW_ARCHIVED === '1';
 
+  // Selected tab (Ongoing / Completed / Archived) derived from URL
   const getTabFromPath = (path: string) => {
     const parts = path.split('/').filter(Boolean);
     // parts might be ['projects'] or ['projects','ongoing']
     if (parts[1] === 'ongoing') return 'Ongoing';
     if (parts[1] === 'completed') return 'Completed';
-    if (parts[1] === 'archived') return 'Archived';
+    if (parts[1] === 'archived' && showArchived) return 'Archived';
     return 'Ongoing';
   };
 
@@ -58,7 +60,7 @@ const Projects = () => {
   React.useEffect(() => {
     const t = getTabFromPath(location.pathname);
     setSelectedTab(t);
-  }, [location.pathname]);
+  }, [location.pathname, showArchived]);
 
   const projectsForTab = React.useMemo(() => {
     return filteredProjects.filter(p => {
@@ -385,7 +387,9 @@ const Projects = () => {
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-terminal-text mb-2">{selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}</h1>
             <div className="flex items-center gap-2">
-              {(['Ongoing','Completed','Archived'] as const).map(tab => (
+              {(
+                showArchived ? (['Ongoing','Completed','Archived'] as const) : (['Ongoing','Completed'] as const)
+              ).map(tab => (
                 <button
                   key={tab}
                   onClick={() => navigate(`/projects/${tab.toLowerCase()}`)}
