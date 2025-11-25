@@ -187,10 +187,10 @@ const Projects = () => {
     return (
       <div className="border border-terminal-dim rounded-lg p-4 hover:border-terminal-accent transition-all group">
         <div className="flex justify-between items-start mb-2">
-          <div>
-            <h3 className="font-semibold text-lg text-terminal-text">{project.name}</h3>
+          <div className="min-w-0">
+            <h3 className="font-semibold text-lg text-terminal-text truncate">{project.name}</h3>
             {project.currentDesc && (
-              <p className="text-terminal-dim text-base mt-1">{project.currentDesc}</p>
+              <p className="text-terminal-dim text-sm mt-1 truncate">{project.currentDesc}</p>
             )}
           </div>
         </div>
@@ -220,10 +220,10 @@ const Projects = () => {
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-2 rounded hover:border-terminal-accent"
+                      className="flex items-center gap-3 p-2 rounded hover:border-terminal-accent min-w-0"
                     >
                       <ExternalLink size={16} className="text-terminal-accent" />
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <div className="text-terminal-text truncate">{domain}</div>
                         {/* <div className="text-terminal-dim text-sm truncate">{url}</div> */}
                       </div>
@@ -302,10 +302,10 @@ const Projects = () => {
                   href={project.projectDoc.startsWith('http') ? project.projectDoc : `https://${project.projectDoc}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 border border-terminal-dim p-2 rounded hover:border-terminal-accent"
+                  className="flex items-center gap-3 border border-terminal-dim p-2 rounded hover:border-terminal-accent min-w-0"
                 >
                   <FileText size={18} className="text-terminal-accent" />
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="text-terminal-text font-medium truncate">Project Documentation</div>
                     {/* <div className="text-terminal-dim text-sm truncate">{project.projectDoc.replace(/^https?:\/\//, '')}</div> */}
                   </div>
@@ -320,10 +320,10 @@ const Projects = () => {
                   href={project.projectGithub.startsWith('http') ? project.projectGithub : `https://${project.projectGithub}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 border border-terminal-dim p-2 rounded hover:border-terminal-accent"
+                  className="flex items-center gap-3 border border-terminal-dim p-2 rounded hover:border-terminal-accent min-w-0"
                 >
                   <Github size={18} className="text-terminal-accent" />
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="text-terminal-text font-medium truncate">Project Github</div>
                     {/* <div className="text-terminal-dim text-sm truncate">{project.projectGithub.replace(/^https?:\/\//, '')}</div> */}
                   </div>
@@ -341,10 +341,10 @@ const Projects = () => {
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 border border-terminal-dim p-2 rounded hover:border-terminal-accent"
+                      className="flex items-center gap-3 border border-terminal-dim p-2 rounded hover:border-terminal-accent min-w-0"
                     >
                       <ExternalLink size={16} className="text-terminal-accent" />
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <div className="text-terminal-text truncate">{domain}</div>
                         {/* <div className="text-terminal-dim text-sm truncate">{url}</div> */}
                       </div>
