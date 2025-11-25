@@ -37,14 +37,14 @@ const Home = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <div className="grid md:grid-cols-1 gap-8 mb-16">
           <Link 
             to="/projects" 
             className="bg-terminal-dim/20 hover:bg-terminal-dim/30 border border-terminal-dim rounded-lg p-6 transition-all group"
           >
             <h2 className="text-2xl font-bold text-terminal-text mb-2 group-hover:text-terminal-accent">Browse Projects</h2>
             <p className="text-terminal-dim mb-4">
-              Explore available projects and find opportunities that match your skills.
+              Explore available and completed projects and find opportunities that match your skills.
             </p>
             <div className="flex items-center text-terminal-accent">
               <span>View all projects</span>
@@ -52,7 +52,7 @@ const Home = () => {
             </div>
           </Link>
           
-          <Link 
+          {/* <Link 
             to="/apply" 
             className="bg-terminal-dim/20 hover:bg-terminal-dim/30 border border-terminal-dim rounded-lg p-6 transition-all group"
           >
@@ -64,7 +64,7 @@ const Home = () => {
               <span>Apply now</span>
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
       

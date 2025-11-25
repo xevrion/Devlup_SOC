@@ -180,6 +180,26 @@ export const fetchProjects = async (): Promise<Project[]> => {
           return tech.trim().replace(/\b\w/g, char => char.toUpperCase());
         }) : [];
 
+      // helper to get first available field name from item (case/label variations)
+      const getField = (names: string[]) => {
+        for (const n of names) {
+          if (Object.prototype.hasOwnProperty.call(item, n) && item[n]) return item[n];
+        }
+        // try case-insensitive match
+        const keys = Object.keys(item);
+        for (const n of names) {
+          const found = keys.find(k => k.toLowerCase() === n.toLowerCase());
+          if (found && item[found]) return item[found];
+        }
+        return '';
+      };
+
+      const rawStatus = getField(['Status', 'status']);
+      const rawCurrentDesc = getField(['Current Desc', 'Current Description', 'CurrentDesc', 'current desc']);
+      const rawLiveLinks = getField(['Live Links', 'Live Link', 'Live Links (comma separated)', 'Live Links (comma separated)'] );
+  const rawProjectGithub = getField(['Project Github', 'Project GitHub', 'Project Github Url', 'Project GitHub Url', 'Project Git Repo', 'Github', 'GitHub']);
+
+      const liveLinksArray = (rawLiveLinks || '').toString().split(/[,;\n\r]+/).map((l: string) => l.trim()).filter((l: string) => l);
       return {
         id: String(index + 1),
         name: item['Project Name'] || '',
@@ -207,7 +227,12 @@ export const fetchProjects = async (): Promise<Project[]> => {
           github: item['Mentor 3 Github Url'] || undefined
         } : undefined,
         projectDoc: item['Project Doc'] || '',
-        category: item['Category'] ? item['Category'].trim() : undefined
+        category: item['Category'] ? item['Category'].trim() : undefined,
+        status: rawStatus ? rawStatus.toString().trim() : undefined,
+        currentDesc: rawCurrentDesc ? rawCurrentDesc.toString().trim() : undefined,
+        liveLinks: liveLinksArray.length > 0 ? liveLinksArray : undefined
+        ,
+        projectGithub: rawProjectGithub ? rawProjectGithub.toString().trim() : undefined
       };
     });
     

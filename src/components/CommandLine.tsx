@@ -52,15 +52,13 @@ const CommandLine: React.FC<CommandLineProps> = ({ onCommand, isProcessing }) =>
       onCommand(input);
       
       // Handle navigation commands with simpler syntax
-      // Apply command
+      // Apply command (disabled) - applications are currently closed
       if (parts[0] === 'apply' || parts[0] === 'a') {
-        setTimeout(() => {
-          navigate('/apply');
-        }, 500); // Small delay to allow terminal output to be seen before navigation
+        // Do not navigate to the apply page. TerminalContext will display a message.
         setInput('');
         setHistoryIndex(-1);
         return;
-      } 
+      }
       
       // View project command
       if ((parts[0] === 'view' || parts[0] === 'v') && parts[1]) {

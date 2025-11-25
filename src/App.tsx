@@ -7,7 +7,8 @@ import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import NotFound from "./pages/NotFound";
 import ProjectDetail from "./pages/ProjectDetail";
-import ApplyPage from "./pages/ApplyPage";
+// ApplyPage route is disabled while applications are closed
+// import ApplyPage from "./pages/ApplyPage";
 import Contact from "./pages/Contact";
 import Stats from "./pages/Stats";
 import { TerminalProvider } from "./context/TerminalContext";
@@ -29,8 +30,13 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/ongoing" element={<Projects />} />
+          <Route path="/projects/completed" element={<Projects />} />
+          <Route path="/projects/archived" element={<Projects />} />
           <Route path="/projects/:projectId" element={<ProjectDetail />} />
+          {/* Apply route disabled while applications are closed
           <Route path="/apply" element={<ApplyPage />} />
+          */}
           <Route path="/contact" element={<Contact />} />
           <Route path="/stats" element={<Stats />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -101,6 +101,7 @@ const Navbar = () => {
               </TooltipContent>
             </Tooltip>
 
+            {/* Apply is temporarily disabled while applications are closed
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link to="/apply" className={`${isActive('/apply')} transition-colors flex items-center`}>
@@ -115,6 +116,7 @@ const Navbar = () => {
                 </div>
               </TooltipContent>
             </Tooltip>
+            */}
 
             <Tooltip>
               <TooltipTrigger asChild>

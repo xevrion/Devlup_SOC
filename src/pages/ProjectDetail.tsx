@@ -152,74 +152,143 @@ const ProjectDetail = () => {
                     <span className="relative z-10">{categoryLabel}</span>
                   </span>
                 )}
-                <p className="text-terminal-dim mb-4">{project.description}</p>
-              
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.techStack.map((tech) => (
-                    <span 
-                      key={tech} 
-                      className="bg-terminal-dim/20 px-2 py-1 text-sm text-terminal-text rounded"
-                    >
-                      {tech}
+                {/* Status badge */}
+                {project.status && (
+                  <div className="mb-2">
+                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ${
+                      project.status.toLowerCase() === 'completed' ? 'bg-emerald-600/90 text-white' :
+                      project.status.toLowerCase() === 'ongoing' ? 'bg-amber-500/90 text-black' :
+                      'bg-gray-600/80 text-white'
+                    }`}>
+                      {project.status}
                     </span>
-                  ))}
-                </div>
-              </div>
+                  </div>
+                )}
+
+                {/* Tabbed view: Overview | Links | Docs | Mentors */}
+                {/* Local tab state */}
+                {(() => {
+                  const [detailTab, setDetailTab] = React.useState<'Overview' | 'Links' | 'Docs' | 'Mentors'>('Overview');
+
+                  return (
+                    <div>
+                      <div className="flex items-center gap-2 mb-4">
+                        {(['Overview','Links','Docs','Mentors'] as const).map(tab => (
+                          <button
+                            key={tab}
+                            onClick={() => setDetailTab(tab)}
+                            className={`px-3 py-1 rounded text-sm ${detailTab === tab ? 'bg-terminal-accent text-black' : 'bg-terminal-dim/20'}`}
+                          >
+                            {tab}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="mb-4">
+                        {detailTab === 'Overview' && (
+                          <div>
+                            <h2 className="text-xl text-terminal-text mb-2">{project.status && project.status.toLowerCase() === 'completed' ? 'Summary' : 'Description'}</h2>
+                            <div className="text-terminal-dim mb-3">{project.status && project.status.toLowerCase() === 'completed' ? (project.currentDesc || 'No completion summary provided.') : project.description}</div>
+
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {project.techStack && project.techStack.map((tech: string) => (
+                                <span key={tech} className="bg-terminal-dim/20 px-2 py-1 text-sm text-terminal-text rounded">{tech}</span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {detailTab === 'Links' && (
+                          <div>
+                            <h2 className="text-xl text-terminal-text mb-2">Project Links</h2>
+
+                            {/* Project Github (from sheet) */}
+                            {project.projectGithub && (
+                              <div className="mb-3">
+                                <a href={project.projectGithub.startsWith('http') ? project.projectGithub : `https://${project.projectGithub}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-terminal-accent hover:underline">
+                                  <Github size={16} />
+                                  <span>Project Github</span>
+                                </a>
+                              </div>
+                            )}
+
+                            <h3 className="text-lg text-terminal-text mb-2">Live Links</h3>
+                            {project.liveLinks && project.liveLinks.length > 0 ? (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                                {project.liveLinks.map((link, idx) => {
+                                  const url = link.startsWith('http') ? link : `https://${link}`;
+                                  const domain = (() => {
+                                    try { return new URL(url).hostname; } catch { return link; }
+                                  })();
+
+                                  return (
+                                    <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className="border border-terminal-dim p-3 rounded flex items-center gap-3 hover:border-terminal-accent">
+                                      <img src={`https://www.google.com/s2/favicons?domain=${domain}`} alt="favicon" className="w-6 h-6" />
+                                      <div className="flex-1">
+                                        <div className="text-terminal-text font-medium truncate">{domain}</div>
+                                        <div className="text-terminal-dim text-sm truncate">{url}</div>
+                                      </div>
+                                      <ExternalLink className="text-terminal-accent" />
+                                    </a>
+                                  );
+                                })}
+                              </div>
+                            ) : (
+                              <div className="text-terminal-dim mb-3">No live links provided.</div>
+                            )}
+                          </div>
+                        )}
+
+                        {detailTab === 'Docs' && (
+                          <div>
+                            <h2 className="text-xl text-terminal-text mb-3">Project Documentation</h2>
+                            {project.projectDoc ? (
+                              <div className="space-y-2">
+                                <a href={project.projectDoc} className="flex items-center gap-2 text-terminal-accent hover:underline" target="_blank" rel="noopener noreferrer">
+                                  <FileText size={16} />
+                                  Project Doc
+                                </a>
+                              </div>
+                            ) : (
+                              <div className="text-terminal-dim">No documentation link provided.</div>
+                            )}
+                          </div>
+                        )}
+
+                        {detailTab === 'Mentors' && (
+                          <div>
+                            <h2 className="text-xl text-terminal-text mb-3">Project Mentors ({mentors.length})</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                              {renderMentorCard(project.mentor, 1)}
+                              {renderMentorCard(project.mentor2, 2)}
+                              {renderMentorCard(project.mentor3, 3)}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })()}
             
-            {/* Project Documentation Section */}
-            {project.projectDoc && (
-              <div className="border-t border-terminal-dim pt-4">
-                <h2 className="text-xl text-terminal-text mb-3">Project Documentation</h2>
-                <div className="space-y-2">
-                  <a 
-                    href={project.projectDoc} 
-                    className="flex items-center gap-2 text-terminal-accent hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FileText size={16} />
-                    Project Doc
-                  </a>
-                </div>
-              </div>
-            )}
-            
-            {/* Mentor Information Section */}
-            <div className="border-t border-terminal-dim pt-4">
-              <h2 className="text-xl text-terminal-text mb-3">
-                Project Mentors ({mentors.length})
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {renderMentorCard(project.mentor, 1)}
-                {renderMentorCard(project.mentor2, 2)}
-                {renderMentorCard(project.mentor3, 3)}
-              </div>
-            </div>
-            
-            {/* Apply Section */}
-            <div className="border-t border-terminal-dim pt-4 flex justify-between items-center">
+            {/* Apply Section (disabled while applications are closed)
+            <div className="border-t border-terminal-dim pt-4 flex flex-col md:flex-row md:justify-between items-start md:items-center gap-4">
               <div>
                 <p className="text-terminal-dim">Interested in contributing to this project?</p>
+                For completed projects show Project Github link if available
+                {project.status && project.status.toLowerCase() === 'completed' && project.projectGithub && (
+                  <div className="mt-2">
+                    <a href={project.projectGithub.startsWith('http') ? project.projectGithub : `https://${project.projectGithub}`} target="_blank" rel="noopener noreferrer" className="text-terminal-accent hover:underline flex items-center gap-2">
+                      <Github size={14} />
+                      <span>Project Github</span>
+                    </a>
+                  </div>
+                )}
               </div>
-              {/* Conditional Apply button - RAID form for category 1, regular apply page for others */}
-              {showRaidLogo ? (
-                console.log('Showing RAID apply button with url:', import.meta.env.VITE_GOOGLE_FORM_URL_RAID),
-                <button 
-                  onClick={() => window.open(import.meta.env.VITE_GOOGLE_FORM_URL_RAID, '_blank')}
-                  className="bg-terminal-dim hover:bg-terminal-accent text-terminal-text px-4 py-2 rounded transition-colors"
-                >
-                  Apply Now
-                </button>
-              ) : (
-                <Link 
-                  to="/apply" 
-                  state={{ selectedProjectId: project.id }}
-                  className="bg-terminal-dim hover:bg-terminal-accent text-terminal-text px-4 py-2 rounded transition-colors"
-                >
-                  Apply Now
-                </Link>
-              )}
+              <div>
+                <span className="text-terminal-dim">Application buttons are temporarily disabled.</span>
+              </div>
             </div>
+            */}
             
             </div> {/* Close space-y-6 div */}
           </div>
@@ -227,6 +296,7 @@ const ProjectDetail = () => {
       </div>
       {/* Custom Footer for ProjectDetail with conditional text and logo */}
       <Footer label={footerLabel} showRaidLogo={showRaidLogo} />
+    </div>
     </div>
   );
 };

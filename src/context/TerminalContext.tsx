@@ -61,7 +61,6 @@ KEYBOARD SHORTCUTS
 Navigation:
   Alt+H       - Navigate to Home page
   Alt+P       - Navigate to Projects page
-  Alt+A       - Navigate to Apply page
   Alt+S       - Navigate to Stats page
   Alt+C       - Navigate to Contact page
   Alt+Shift+T - Switch to Terminal View
@@ -292,7 +291,6 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
   filter [tech], f [tech]    Filter projects by technology
   view [id], v [id], [id]    View details of a specific project
   stats [options]          View site analytics data
-  apply, a                 Open the contributor application form
   mentors, m               Show all project mentors
   shortcuts, keys          Display keyboard shortcuts`
         });
@@ -461,12 +459,22 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
         });
         break;
         
+      // Apply command disabled while applications are closed
+      /*
       case 'apply':
       case 'a':
         setView('form');
         addToHistory({ 
           type: 'form', 
           content: 'Opening contributor application form...' 
+        });
+        break;
+      */
+      case 'apply':
+      case 'a':
+        addToHistory({
+          type: 'response',
+          content: 'Applications are currently closed. Please check back later.'
         });
         break;
         

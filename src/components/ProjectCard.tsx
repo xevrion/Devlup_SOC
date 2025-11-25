@@ -30,6 +30,11 @@ export interface Project {
   };
   projectDoc?: string;
   category?: string; // Add category field
+  // New optional fields from Sheets
+  status?: string; // e.g. 'Completed', 'Ongoing', 'Archived'
+  currentDesc?: string; // Short description of current/completed work
+  liveLinks?: string[]; // Array of live/demo links
+  projectGithub?: string; // optional project github url
 }
 
 interface ProjectCardProps {
@@ -55,6 +60,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           <h2 className="font-bold text-xl text-terminal-text group-hover:text-terminal-accent">
             {project.name}
           </h2>
+          {/* Status badge intentionally not shown on list cards (kept in detail page) */}
           {/* Category badge */}
           {project.category && (
             <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-semibold ${categoryClass}`}>
@@ -64,30 +70,61 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
         <ChevronRight className="text-terminal-dim group-hover:text-terminal-accent" />
       </div>
-      <p className="text-terminal-dim mb-4 flex-grow">
-        {project.description}
-      </p>
-      
-      <div className="space-y-4">
-        <div className="flex flex-wrap gap-2">
-          {project.techStack.map((tech, index) => (
-            <span 
-              key={index}
-              className="bg-terminal-dim/20 px-2 py-1 text-xs text-terminal-text rounded"
-            >
-              {tech}
-            </span>
-          ))}
+      {project.status && project.status.toLowerCase() === 'completed' ? (
+        <div className="mt-3">
+          {project.currentDesc ? (
+            <p className="text-terminal-dim mb-3">{project.currentDesc}</p>
+          ) : (
+            <p className="text-terminal-dim mb-3">No summary provided.</p>
+          )}
+
+          {project.liveLinks && project.liveLinks.length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {project.liveLinks.map((link, i) => (
+                <a
+                  key={i}
+                  href={link.startsWith('http') ? link : `https://${link}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2 py-1 bg-terminal-dim/20 rounded text-xs text-terminal-accent hover:underline truncate"
+                  title={link}
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="text-terminal-dim text-sm">No live links available.</div>
+          )}
         </div>
-        
-        <div className="border-t border-terminal-dim pt-4 flex justify-between items-center">
-          <span className="text-sm text-terminal-dim">
-            {project.mentor && project.mentor2 && project.mentor3 ? '3 mentors' : 
-             project.mentor && project.mentor2 ? '2 mentors' : '1 mentor'}
-          </span>
-          <span className="text-terminal-accent text-sm">View Details</span>
-        </div>
-      </div>
+      ) : (
+        <>
+          <p className="text-terminal-dim mb-4 flex-grow">
+            {project.description}
+          </p>
+          
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-2">
+              {project.techStack.map((tech, index) => (
+                <span 
+                  key={index}
+                  className="bg-terminal-dim/20 px-2 py-1 text-xs text-terminal-text rounded"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+            
+            <div className="border-t border-terminal-dim pt-4 flex justify-between items-center">
+              <span className="text-sm text-terminal-dim">
+                {project.mentor && project.mentor2 && project.mentor3 ? '3 mentors' : 
+                 project.mentor && project.mentor2 ? '2 mentors' : '1 mentor'}
+              </span>
+              <span className="text-terminal-accent text-sm">View Details</span>
+            </div>
+          </div>
+        </>
+      )}
     </Link>
   );
 };

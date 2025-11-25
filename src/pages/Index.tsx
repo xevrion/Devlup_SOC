@@ -49,6 +49,19 @@ const TerminalView: React.FC = () => {
     });
   }, [projects, searchQuery, techFilter]);
 
+  // Selected tab: one of 'Ongoing' | 'Completed' | 'Archived'
+  const [selectedTab, setSelectedTab] = React.useState<'Ongoing' | 'Completed' | 'Archived'>('Ongoing');
+
+  // Projects to display for the active tab (treat missing status as 'Completed' for backward compat)
+  const projectsForTab = React.useMemo(() => {
+    return filteredProjects.filter(p => {
+      const s = (p.status || '').toLowerCase() || 'completed';
+      if (selectedTab.toLowerCase() === 'ongoing') return s === 'ongoing';
+      if (selectedTab.toLowerCase() === 'archived') return s === 'archived';
+      return s === 'completed';
+    });
+  }, [filteredProjects, selectedTab]);
+
   // handleCommand now just forwards to executeCommand since CommandLine handles navigation directly
   const handleCommand = (command: string) => {
     executeCommand(command);
@@ -63,7 +76,7 @@ const TerminalView: React.FC = () => {
       } />
       
       {/* Navigation buttons */}
-      <div className="bg-terminal-dim/30 p-2 flex space-x-2">
+  <div className="bg-terminal-dim/30 p-2 flex space-x-2">
         <button 
           className={`px-3 py-1 rounded text-sm flex items-center ${view === 'terminal' ? 'bg-terminal-accent text-black' : 'hover:bg-terminal-dim'}`}
           onClick={() => setView('terminal')}
@@ -78,6 +91,7 @@ const TerminalView: React.FC = () => {
           <Filter size={14} className="mr-1" />
           Projects
         </button>
+        {/* Apply is disabled while applications are closed
         <Link 
           to="/apply" 
           className={`px-3 py-1 rounded text-sm flex items-center hover:bg-terminal-dim`}
@@ -85,6 +99,7 @@ const TerminalView: React.FC = () => {
           <Terminal size={14} className="mr-1" />
           Apply
         </Link>
+        */}
       </div>
       
       <div className="terminal-body min-h-[500px] max-h-[70vh] overflow-y-auto">
@@ -97,6 +112,27 @@ const TerminalView: React.FC = () => {
         
         {view === 'projects' && (
           <div className="space-y-4">
+            {/* Page heading and tabs */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div>
+                <h2 className="text-2xl font-bold text-terminal-text">
+                  {selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}
+                </h2>
+                <p className="text-terminal-dim">Browse projects by status. Use search or technology filter to narrow results.</p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {(['Ongoing','Completed','Archived'] as const).map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setSelectedTab(tab)}
+                    className={`px-3 py-1 rounded text-sm ${selectedTab === tab ? (tab === 'Completed' ? 'bg-emerald-600 text-white' : tab === 'Ongoing' ? 'bg-amber-400 text-black' : 'bg-gray-600 text-white') : 'bg-terminal-dim/20'}`}>
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Search and filter controls */}
             <div className="flex flex-col md:flex-row gap-3">
               {/* Search input */}
@@ -134,29 +170,35 @@ const TerminalView: React.FC = () => {
               </div>
             </div>
             
-            {/* Projects list */}
+            {/* Projects list for selected tab */}
             {loading ? (
               <div className="text-center py-8">
                 <p className="text-terminal-accent">Loading projects...</p>
               </div>
-            ) : filteredProjects.length > 0 ? (
-              <div className="space-y-4">
-                {filteredProjects.map((project) => (
-                  <ProjectCard key={project.id} project={project} />
-                ))}
-              </div>
             ) : (
-              <div className="text-center py-8">
-                <p className="text-terminal-error">No projects match your criteria.</p>
-                <button 
-                  className="mt-3 text-terminal-accent hover:underline"
-                  onClick={() => {
-                    setSearchQuery('');
-                    setTechFilter(null);
-                  }}
-                >
-                  Clear filters
-                </button>
+              <div>
+                <div className="mb-3 text-terminal-dim">Showing <span className="font-semibold text-terminal-text">{selectedTab}</span> projects ({projectsForTab.length})</div>
+
+                {projectsForTab.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-terminal-dim">No {selectedTab.toLowerCase()} projects available.</p>
+                    <button 
+                      className="mt-3 text-terminal-accent hover:underline"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setTechFilter(null);
+                      }}
+                    >
+                      Clear filters
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {projectsForTab.map(project => (
+                      <ProjectCard key={project.id} project={project} />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
