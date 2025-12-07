@@ -64,13 +64,13 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				terminal: {
-					DEFAULT: '#0D1117',
-					text: '#87CEEB', // Winter: Sky blue instead of green
-					dim: '#5F9EA0', // Winter: Cadet blue instead of green
-					accent: '#87CEEB', // Winter: Sky blue (cooler tone)
-					error: '#F85149',
-					warning: '#FFB347', // Warmer orange for contrast
-					success: '#7FFFD4', // Aquamarine for winter
+					DEFAULT: 'var(--terminal)',
+					text: 'var(--terminal-text)',
+					dim: 'var(--terminal-dim)',
+					accent: 'var(--terminal-accent)',
+					error: 'var(--terminal-error)',
+					warning: 'var(--terminal-warning)',
+					success: 'var(--terminal-success)',
 					winter: {
 						accent: '#87CEEB', // Sky blue
 						light: '#B0E0E6', // Powder blue

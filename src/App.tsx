@@ -17,16 +17,18 @@ import Footer from "./components/Footer";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import ShortcutProvider from "./components/ShortcutProvider";
 import SnowEffect from "./components/SnowEffect";
+import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
   const isProjectDetailPage = location.pathname.startsWith('/projects/') && location.pathname !== '/projects';
+  const { showSnow } = useTheme();
 
   return (
     <div className="flex flex-col min-h-screen relative">
-      <SnowEffect />
+      {showSnow && <SnowEffect />}
       {/* <div className="relative" style={{ zIndex: 10 }}> */}
         <Navbar />
       {/* </div> */}
@@ -61,15 +63,17 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <TerminalProvider>
-        <BrowserRouter>
-          <ShortcutProvider>
-            <AppContent />
-            {/* Add analytics tracker to record page visits */}
-            <AnalyticsTracker />
-          </ShortcutProvider>
-        </BrowserRouter>
-      </TerminalProvider>
+      <ThemeProvider>
+        <TerminalProvider>
+          <BrowserRouter>
+            <ShortcutProvider>
+              <AppContent />
+              {/* Add analytics tracker to record page visits */}
+              <AnalyticsTracker />
+            </ShortcutProvider>
+          </BrowserRouter>
+        </TerminalProvider>
+      </ThemeProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

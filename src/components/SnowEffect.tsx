@@ -19,7 +19,7 @@ const SnowEffect: React.FC = () => {
               width: `${size}px`,
               height: `${size}px`,
               background: `rgba(255, 255, 255, ${Math.random() * 0.2 + 0.15})`,
-              boxShadow: `0 0 ${size * 0.8}px rgba(135, 206, 235, 0.3)`,
+              boxShadow: `0 0 ${size * 0.8}px var(--accent-glow)`,
               animation: `snow-fall ${duration}s linear infinite`,
               animationDelay: `${delay}s`,
               filter: 'blur(0.8px)'
