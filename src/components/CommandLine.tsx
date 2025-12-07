@@ -99,6 +99,16 @@ const CommandLine: React.FC<CommandLineProps> = ({ onCommand, isProcessing }) =>
         return;
       }
 
+      // Timeline command
+      if (parts[0] === 'timeline' || parts[0] === 'tl') {
+        setTimeout(() => {
+          navigate('/timeline');
+        }, 500);
+        setInput('');
+        setHistoryIndex(-1);
+        return;
+      }
+
       // Search command
       if (parts[0] === 'search' || parts[0] === 's') {
         const query = parts.slice(1).join(' ');
