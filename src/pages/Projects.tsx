@@ -187,23 +187,23 @@ const Projects = () => {
     const mentors = [project.mentor, project.mentor2, project.mentor3].filter(Boolean);
 
     return (
-      <div className="border border-terminal-dim rounded-lg p-4 hover:border-terminal-accent transition-all group">
+      <div className="border border-terminal-dim rounded-lg p-3 sm:p-4 hover:border-terminal-accent transition-all group">
         <div className="flex justify-between items-start mb-2">
-          <div className="min-w-0">
-            <h3 className="font-semibold text-lg text-terminal-text truncate">{project.name}</h3>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold text-base sm:text-lg text-terminal-text break-words">{project.name}</h3>
             {project.currentDesc && (
               // allow current description to wrap to next line(s) on narrow screens
-              <p className="text-terminal-dim text-sm mt-1 whitespace-normal break-words">{project.currentDesc}</p>
+              <p className="text-terminal-dim text-xs sm:text-sm mt-1 whitespace-normal break-words">{project.currentDesc}</p>
             )}
           </div>
         </div>
 
-        <div className="flex items-center gap-2 mt-3 mb-3">
+        <div className="flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 mb-2 sm:mb-3 flex-wrap">
           {(['Preview','Mentors','Links'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setPanel(tab)}
-              className={`px-3 py-1 rounded text-sm ${panel === tab ? 'bg-terminal-accent text-black' : 'bg-terminal-dim/20'}`}
+              className={`px-2 sm:px-3 py-1 rounded text-xs sm:text-sm ${panel === tab ? 'bg-terminal-accent text-black font-semibold' : 'bg-terminal-dim/20'}`}
             >
               {tab}
             </button>
@@ -277,21 +277,21 @@ const Projects = () => {
           {panel === 'Mentors' && (
             <div>
               {mentors.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                   {mentors.map((m, i) => (
-                    <div key={i} className="border border-terminal-dim p-3 rounded">
-                      <div className="font-semibold text-terminal-text">{m.name || m}</div>
-                      {m.role && <div className="text-terminal-dim text-sm">{m.role}</div>}
-                      <div className="mt-2 space-y-1">
-                        {m.email && <a className="text-terminal-accent text-sm" href={`mailto:${m.email}`}>Email </a>}
-                        {m.linkedin && <a className="text-terminal-accent text-sm" href={m.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn  </a>}
-                        {m.github && <a className="text-terminal-accent text-sm" href={m.github} target="_blank" rel="noopener noreferrer">Github</a>}
+                    <div key={i} className="border border-terminal-dim p-2 sm:p-3 rounded">
+                      <div className="font-semibold text-sm sm:text-base text-terminal-text break-words">{m.name || m}</div>
+                      {m.role && <div className="text-terminal-dim text-xs sm:text-sm">{m.role}</div>}
+                      <div className="mt-2 space-y-1 flex flex-wrap gap-2">
+                        {m.email && <a className="text-terminal-accent text-xs sm:text-sm" href={`mailto:${m.email}`}>Email</a>}
+                        {m.linkedin && <a className="text-terminal-accent text-xs sm:text-sm" href={m.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
+                        {m.github && <a className="text-terminal-accent text-xs sm:text-sm" href={m.github} target="_blank" rel="noopener noreferrer">Github</a>}
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="text-terminal-dim">No mentors listed.</div>
+                <div className="text-terminal-dim text-sm">No mentors listed.</div>
               )}
             </div>
           )}
@@ -409,13 +409,13 @@ const Projects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-4">
-      <div className="terminal-window max-w-6xl w-full mx-auto my-8">
+    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-2 sm:p-4">
+      <div className="terminal-window max-w-6xl w-full mx-auto my-4 sm:my-8">
         <TerminalHeader title="DevlUp Projects Archive" />
-        <div className="terminal-body min-h-[500px] overflow-y-auto p-6">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-terminal-text mb-2">{selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}</h1>
-            <div className="flex items-center gap-2">
+        <div className="terminal-body min-h-[500px] overflow-y-auto p-3 sm:p-6">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-xl sm:text-3xl font-bold text-terminal-text mb-2">{selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}</h1>
+            <div className="flex items-center gap-2 flex-wrap">
               {(
                 showArchived ? (['Ongoing','Completed','Archived'] as const) : (['Ongoing','Completed'] as const)
               ).map(tab => (
@@ -427,12 +427,12 @@ const Projects = () => {
                 </button>
               ))}
             </div>
-            <p className="text-terminal-dim mt-3">Use the tabs to switch between Live, Completed and Archived projects.</p>
+            <p className="text-terminal-dim mt-2 sm:mt-3 text-sm sm:text-base">Use the tabs to switch between Live, Completed and Archived projects.</p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Search and filter controls */}
-            <div className="flex flex-col md:flex-row gap-3">
+            <div className="flex flex-col md:flex-row gap-2 sm:gap-3">
               {/* Search input */}
               <div className="relative flex-1">
                 <Search size={18} className="absolute left-3 top-2.5 text-terminal-dim" />

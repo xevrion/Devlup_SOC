@@ -4,10 +4,10 @@ import TerminalHeader from '../components/TerminalHeader';
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-4">
-      <div className="terminal-window max-w-6xl w-full mx-auto my-8">
+    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-2 sm:p-4">
+      <div className="terminal-window max-w-6xl w-full mx-auto my-4 sm:my-8">
         <TerminalHeader title="Contact DevlUp Labs" />
-        <div className="terminal-body min-h-[500px] overflow-y-auto p-6">
+        <div className="terminal-body min-h-[500px] overflow-y-auto p-3 sm:p-6">
           {/* FAQ Section moved to top */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-terminal-text mb-4">Frequently Asked Questions</h2>

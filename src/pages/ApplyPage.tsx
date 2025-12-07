@@ -11,10 +11,10 @@ const ApplyPage = () => {
   const selectedProjectId = location.state?.selectedProjectId || '';
 
   return (
-    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-4">
-      <div className="terminal-window max-w-4xl w-full mx-auto my-8">
+    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-2 sm:p-4">
+      <div className="terminal-window max-w-4xl w-full mx-auto my-4 sm:my-8">
         <TerminalHeader title="Contributor Application Form" />
-        <div className="terminal-body min-h-[500px] overflow-y-auto">
+        <div className="terminal-body min-h-[500px] overflow-y-auto p-3 sm:p-6">
           <div className="space-y-4">
             <h2 className="text-xl text-terminal-text">Contributor Application</h2>
             <p className="text-terminal-dim">

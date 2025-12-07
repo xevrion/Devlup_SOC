@@ -60,13 +60,13 @@ const Timeline = () => {
   }
 
   return (
-    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-4">
-      <div className="terminal-window max-w-6xl w-full mx-auto my-8">
+    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-2 sm:p-4">
+      <div className="terminal-window max-w-6xl w-full mx-auto my-4 sm:my-8">
         <TerminalHeader title="Projects Timeline" />
-        <div className="terminal-body min-h-[500px] overflow-y-auto p-6">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-terminal-text mb-2">Projects Timeline</h1>
-            <p className="text-terminal-dim">
+        <div className="terminal-body min-h-[500px] overflow-y-auto p-3 sm:p-6">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-xl sm:text-3xl font-bold text-terminal-text mb-2">Projects Timeline</h1>
+            <p className="text-sm sm:text-base text-terminal-dim">
               Browse projects organized by season and program. Each section shows all projects from that program.
             </p>
           </div>
@@ -83,16 +83,16 @@ const Timeline = () => {
                   <div className="absolute -left-[9px] top-0 w-4 h-4 bg-terminal-accent rounded-full border-2 border-terminal"></div>
                   
                   <div className="mb-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Calendar size={20} className="text-terminal-accent" />
-                      <h2 className="text-2xl font-bold text-terminal-text">{group.name}</h2>
-                      <span className="text-terminal-dim text-sm">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <Calendar size={18} className="text-terminal-accent sm:w-5 sm:h-5" />
+                      <h2 className="text-lg sm:text-2xl font-bold text-terminal-text">{group.name}</h2>
+                      <span className="text-terminal-dim text-xs sm:text-sm">
                         ({group.projects.length} {group.projects.length === 1 ? 'project' : 'projects'})
                       </span>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 ml-0 sm:ml-6">
                     {group.projects.map((project) => (
                       <Link
                         key={project.id}

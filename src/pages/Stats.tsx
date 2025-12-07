@@ -5,23 +5,23 @@ import { motion } from 'framer-motion';
 
 const Stats: React.FC = () => {
   return (
-    <div className="container mx-auto py-6 px-4 bg-terminal/95 min-h-screen">
+    <div className="container mx-auto py-4 sm:py-6 px-2 sm:px-4 bg-terminal/95 min-h-screen">
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="mb-6"
+        className="mb-4 sm:mb-6"
       >
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-terminal-accent mb-2">Site Analytics</h1>
-          <div className="flex items-center gap-2 bg-terminal border border-terminal-dim px-4 py-2 rounded-md">
-            <Terminal size={16} className="text-terminal-accent" />
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+          <h1 className="text-xl sm:text-3xl font-bold text-terminal-accent mb-2">Site Analytics</h1>
+          <div className="flex items-center gap-2 bg-terminal border border-terminal-dim px-3 sm:px-4 py-2 rounded-md w-full sm:w-auto">
+            <Terminal size={14} className="text-terminal-accent sm:w-4 sm:h-4" />
             <span className="text-xs text-terminal-dim">Try: </span>
             <code className="text-terminal-text text-xs">stats --live</code>
           </div>
         </div>
         
-        <p className="text-terminal-dim">
+        <p className="text-sm sm:text-base text-terminal-dim">
           Real-time visitor data and engagement metrics for DevlUp Projects Archive
         </p>
         
