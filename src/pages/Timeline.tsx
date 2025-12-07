@@ -214,7 +214,7 @@ const Timeline = () => {
                     /* --- RENDER CIRCUIT TIMELINE (If milestones exist) --- */
                     <>
                         {/* Desktop View */}
-                        <div className="hidden lg:block relative h-[450px] w-full px-16 lg:px-24 my-12">
+                        <div className="hidden lg:block relative h-[600px] w-full px-16 lg:px-24 my-12">
                         
                             {/* Central Bus */}
                             <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-700/30 -translate-y-1/2 z-0">
