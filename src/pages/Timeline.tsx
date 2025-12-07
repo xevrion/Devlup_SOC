@@ -467,9 +467,43 @@ const Timeline = () => {
                     <div className="h-1 w-24 bg-gradient-to-r from-terminal-accent to-transparent rounded-full" />
                   </motion.div>
 
-                  {/* Mobile: Vertical Timeline */}
-                  <div className="lg:hidden space-y-6">
-                    {program.milestones.map((milestone, milestoneIndex) => {
+                  {/* Show Coming Soon for Summer of Code */}
+                  {program.name === "Summer of Code" ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: programIndex * 0.2 + 0.3 }}
+                      className="flex flex-col items-center justify-center py-16 lg:py-24"
+                    >
+                      <div className="text-center">
+                        <motion.div
+                          animate={{
+                            scale: [1, 1.1, 1],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                          className="inline-block mb-6"
+                        >
+                          <div className="w-24 h-24 rounded-full bg-terminal-accent/10 border-2 border-terminal-accent/30 flex items-center justify-center">
+                            <Calendar className="text-terminal-accent w-12 h-12" />
+                          </div>
+                        </motion.div>
+                        <h3 className="text-2xl sm:text-3xl font-bold text-terminal-text mb-3">
+                          Coming Soon
+                        </h3>
+                        <p className="text-terminal-dim text-lg">
+                          Timeline will be announced soon
+                        </p>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <>
+                      {/* Mobile: Vertical Timeline */}
+                      <div className="lg:hidden space-y-6">
+                        {program.milestones.map((milestone, milestoneIndex) => {
                       const Icon = milestone.icon;
                       const status =
                         milestone.status ||
@@ -712,6 +746,8 @@ const Timeline = () => {
                       })}
                     </div>
                   </div>
+                    </>
+                  )}
 
                 </motion.div>
               );
