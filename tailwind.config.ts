@@ -65,12 +65,17 @@ export default {
 				},
 				terminal: {
 					DEFAULT: '#0D1117',
-					text: '#4AF626',
-					dim: '#2EA043',
-					accent: '#58A6FF',
+					text: '#87CEEB', // Winter: Sky blue instead of green
+					dim: '#5F9EA0', // Winter: Cadet blue instead of green
+					accent: '#87CEEB', // Winter: Sky blue (cooler tone)
 					error: '#F85149',
-					warning: '#F0883E',
-					success: '#3FB950'
+					warning: '#FFB347', // Warmer orange for contrast
+					success: '#7FFFD4', // Aquamarine for winter
+					winter: {
+						accent: '#87CEEB', // Sky blue
+						light: '#B0E0E6', // Powder blue
+						icy: '#E0F6FF' // Icy blue
+					}
 				}
 			},
 			fontFamily: {

@@ -20,7 +20,9 @@ const Projects = () => {
   const allTechStacks = React.useMemo(() => {
     const techSet = new Set<string>();
     projects.forEach(project => {
-      project.techStack.forEach(tech => techSet.add(tech));
+      if (project.techStack && Array.isArray(project.techStack)) {
+        project.techStack.forEach(tech => techSet.add(tech));
+      }
     });
     return Array.from(techSet).sort();
   }, [projects]);
@@ -407,9 +409,9 @@ const Projects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-terminal flex flex-col items-center p-4">
+    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-4">
       <div className="terminal-window max-w-6xl w-full mx-auto my-8">
-        <TerminalHeader title="DevlUp Labs Projects" />
+        <TerminalHeader title="DevlUp Projects Archive" />
         <div className="terminal-body min-h-[500px] overflow-y-auto p-6">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-terminal-text mb-2">{selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}</h1>

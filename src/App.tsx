@@ -7,15 +7,16 @@ import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import NotFound from "./pages/NotFound";
 import ProjectDetail from "./pages/ProjectDetail";
-// ApplyPage route is disabled while applications are closed
-// import ApplyPage from "./pages/ApplyPage";
+import ApplyPage from "./pages/ApplyPage";
 import Contact from "./pages/Contact";
 import Stats from "./pages/Stats";
+import Timeline from "./pages/Timeline";
 import { TerminalProvider } from "./context/TerminalContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import ShortcutProvider from "./components/ShortcutProvider";
+import SnowEffect from "./components/SnowEffect";
 
 const queryClient = new QueryClient();
 
@@ -24,9 +25,12 @@ const AppContent = () => {
   const isProjectDetailPage = location.pathname.startsWith('/projects/') && location.pathname !== '/projects';
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
+    <div className="flex flex-col min-h-screen relative">
+      <SnowEffect />
+      {/* <div className="relative" style={{ zIndex: 10 }}> */}
+        <Navbar />
+      {/* </div> */}
+      <main className="flex-grow relative" >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Projects />} />
@@ -34,17 +38,20 @@ const AppContent = () => {
           <Route path="/projects/completed" element={<Projects />} />
           <Route path="/projects/archived" element={<Projects />} />
           <Route path="/projects/:projectId" element={<ProjectDetail />} />
-          {/* Apply route disabled while applications are closed
           <Route path="/apply" element={<ApplyPage />} />
-          */}
           <Route path="/contact" element={<Contact />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/timeline" element={<Timeline />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       {/* Only render Footer if not on ProjectDetail page (which has its own custom Footer) */}
-      {!isProjectDetailPage && <Footer />}
+      {!isProjectDetailPage && (
+        <div className="relative" style={{ zIndex: 10 }}>
+          <Footer />
+        </div>
+      )}
     </div>
   );
 };

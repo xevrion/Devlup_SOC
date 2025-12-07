@@ -55,7 +55,7 @@ const ContributorForm: React.FC<ContributorFormProps> = ({ projects, initialProj
           href={googleFormUrl}
           target="_blank" 
           rel="noopener noreferrer"
-          className="bg-terminal-accent hover:bg-terminal-accent/80 text-terminal-text px-6 py-3 rounded-md transition-colors flex items-center space-x-2"
+          className="bg-terminal-accent hover:bg-terminal-accent/80 text-black font-semibold px-6 py-3 rounded-md transition-colors flex items-center space-x-2 shadow-lg"
         >
           <span>Open Application Form</span>
           <ExternalLink size={16} />

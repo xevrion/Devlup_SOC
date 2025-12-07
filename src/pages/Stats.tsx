@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const Stats: React.FC = () => {
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="container mx-auto py-6 px-4 bg-terminal/95 min-h-screen">
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -22,7 +22,7 @@ const Stats: React.FC = () => {
         </div>
         
         <p className="text-terminal-dim">
-          Real-time visitor data and engagement metrics for DevlUp Labs SOC
+          Real-time visitor data and engagement metrics for DevlUp Projects Archive
         </p>
         
         <div className="flex items-center text-sm text-terminal-dim mt-4">
@@ -49,7 +49,7 @@ const Stats: React.FC = () => {
               About These Analytics
             </h3>
             <p className="text-sm text-terminal-dim mb-3">
-              This dashboard shows real-time analytics data for the DevlUp Labs Summer of Code website.
+              This dashboard shows real-time analytics data for the DevlUp Projects Archive website.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>

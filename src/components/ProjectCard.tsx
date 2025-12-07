@@ -43,12 +43,17 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   // Determine category label and style
-  let categoryLabel = 'SoC';
+  let categoryLabel = '';
   let categoryClass = 'bg-blue-600/90 text-white dev-badge';
   
-  if (project.category && project.category.trim().toLowerCase() === 'soc x raid') {
+  // For ongoing projects, show WoC '26
+  if (project.status && project.status.toLowerCase() === 'ongoing') {
+    categoryLabel = "WoC '26";
+  } else if (project.category && (project.category.trim().toLowerCase() === 'soc x raid' || project.category === '1' || project.category.toString().toLowerCase().includes('raid'))) {
     categoryLabel = 'SoC X RAID';
     categoryClass = 'bg-blue-600/90 text-white ai-badge';
+  } else {
+    categoryLabel = 'Projects Archive';
   }
   return (
     <Link 
@@ -62,7 +67,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </h2>
           {/* Status badge intentionally not shown on list cards (kept in detail page) */}
           {/* Category badge */}
-          {project.category && (
+          {categoryLabel && (
             <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-semibold ${categoryClass}`}>
               <span className="relative z-10">{categoryLabel}</span>
             </span>
@@ -104,16 +109,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </p>
           
           <div className="space-y-4">
-            <div className="flex flex-wrap gap-2">
-              {project.techStack.map((tech, index) => (
-                <span 
-                  key={index}
-                  className="bg-terminal-dim/20 px-2 py-1 text-xs text-terminal-text rounded"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
+            {project.techStack && project.techStack.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {project.techStack.map((tech, index) => (
+                  <span 
+                    key={index}
+                    className="bg-terminal-dim/20 px-2 py-1 text-xs text-terminal-text rounded"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
             
             <div className="border-t border-terminal-dim pt-4 flex justify-between items-center">
               <span className="text-sm text-terminal-dim">

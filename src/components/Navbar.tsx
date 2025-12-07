@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Briefcase, User, BarChart, Phone } from 'lucide-react';
+import { Home, Briefcase, User, BarChart, Phone, Calendar } from 'lucide-react';
 import { useTerminal } from '../context/TerminalContext';
 import { 
   Tooltip,
@@ -101,7 +101,6 @@ const Navbar = () => {
               </TooltipContent>
             </Tooltip>
 
-            {/* Apply is temporarily disabled while applications are closed
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link to="/apply" className={`${isActive('/apply')} transition-colors flex items-center`}>
@@ -116,7 +115,20 @@ const Navbar = () => {
                 </div>
               </TooltipContent>
             </Tooltip>
-            */}
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link to="/timeline" className={`${isActive('/timeline')} transition-colors flex items-center`}>
+                  <Calendar size={16} className="mr-1" />
+                  <span>Timeline</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <div className="flex items-center gap-1">
+                  <span>Timeline</span>
+                </div>
+              </TooltipContent>
+            </Tooltip>
 
             <Tooltip>
               <TooltipTrigger asChild>

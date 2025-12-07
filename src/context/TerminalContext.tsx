@@ -107,7 +107,7 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
   const [commandHistory, setCommandHistory] = useState<CommandResponse[]>([
     { 
       type: 'response', 
-      content: `Welcome to DevlUp Labs Summer of Code Terminal!\nType 'help' to see available commands.` 
+      content: `Welcome to DevlUp Projects Archive Terminal!\nType 'help' to see available commands.` 
     }
   ]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -459,22 +459,12 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
         });
         break;
         
-      // Apply command disabled while applications are closed
-      /*
       case 'apply':
       case 'a':
-        setView('form');
+        window.location.href = '/apply';
         addToHistory({ 
-          type: 'form', 
+          type: 'response', 
           content: 'Opening contributor application form...' 
-        });
-        break;
-      */
-      case 'apply':
-      case 'a':
-        addToHistory({
-          type: 'response',
-          content: 'Applications are currently closed. Please check back later.'
         });
         break;
         
@@ -558,7 +548,7 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
       case 'about':
         addToHistory({ 
           type: 'response',
-          content: 'DevlUp Labs Summer of Code - A terminal-themed platform for open source projects'
+          content: 'DevlUp Projects Archive - A terminal-themed platform for all projects and programs'
         });
         addToHistory({ 
           type: 'code',

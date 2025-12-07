@@ -1,8 +1,8 @@
-# 🚀 DevlUp Labs Summer of Code
+# 🚀 DevlUp Projects Archive
 
 <div align="center">
 
-<img src="public/screenshots/screenshot.png" alt="DevlUp Labs Summer of Code Terminal" width="80%">
+<img src="public/screenshots/screenshot.png" alt="DevlUp Projects Archive Terminal" width="80%">
 
 ### *Fostering open-source innovation through collaborative coding challenges!*
 
@@ -33,7 +33,7 @@
 
 ## 📋 Overview
 
-A terminal-themed web application for the DevlUp Labs Summer of Code program that connects students with open-source projects. This interactive platform allows users to explore projects, learn about mentors, and apply to contribute using a unique terminal-like interface.
+A terminal-themed web application for the DevlUp Projects Archive that showcases all projects and programs. This interactive platform allows users to explore projects, learn about mentors, and apply to contribute using a unique terminal-like interface.
 
 ## ✨ Features
 
@@ -157,7 +157,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👏 Acknowledgements
 
-- [DevlUp Labs](https://devluplabs.tech/#/) for organizing the Summer of Code program
+- [DevlUp Labs](https://devluplabs.tech/#/) for organizing the Projects Archive
 - All mentors who contribute their time to guide students
 - [Shadcn/UI](https://ui.shadcn.com/) for the UI components
 - [Lucide Icons](https://lucide.dev/) for beautiful icon set
@@ -167,5 +167,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-Made with ⚡ by DevlUp Labs Summer of Code Team
+Made with ⚡ by DevlUp Labs Projects Archive Team
 </div>

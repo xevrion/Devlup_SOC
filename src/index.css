@@ -46,15 +46,22 @@
 
   body {
     @apply bg-terminal text-terminal-text font-mono antialiased;
+    background: linear-gradient(180deg, #0a0e14 0%, #0D1117 20%, #0f1620 40%, #0a0f18 50%, #0f1620 60%, #0D1117 80%, #0a0e14 100%);
+    background-attachment: fixed;
+    background-size: 100% 200%;
   }
 
   .terminal-window {
     @apply bg-terminal rounded-md shadow-lg border border-terminal-dim overflow-hidden;
-    box-shadow: 0 0 10px rgba(74, 246, 38, 0.2);
+    box-shadow: 0 0 20px rgba(135, 206, 235, 0.4), 0 0 40px rgba(135, 206, 235, 0.15), inset 0 0 20px rgba(135, 206, 235, 0.05);
+    background: linear-gradient(135deg, #0D1117 0%, #0f1620 50%, #0D1117 100%);
+    border-color: rgba(135, 206, 235, 0.3);
   }
 
   .terminal-header {
     @apply bg-terminal-dim px-4 py-2 flex items-center;
+    background: linear-gradient(90deg, rgba(95, 158, 160, 0.15) 0%, rgba(135, 206, 235, 0.2) 50%, rgba(95, 158, 160, 0.15) 100%);
+    border-bottom: 1px solid rgba(135, 206, 235, 0.3);
   }
 
   .terminal-body {
@@ -67,10 +74,12 @@
 
   .terminal-cursor {
     @apply inline-block w-2 h-4 bg-terminal-text ml-1 animate-cursor-blink;
+    box-shadow: 0 0 4px rgba(135, 206, 235, 0.8);
   }
 
   .command {
     @apply text-terminal-text;
+    text-shadow: 0 0 3px rgba(135, 206, 235, 0.3);
   }
 
   .response {
@@ -78,7 +87,32 @@
   }
 
   .tech-badge {
-    @apply bg-terminal-dim text-terminal-text px-2 py-1 rounded-md text-xs mr-2 mb-2 inline-block transition-all hover:bg-terminal-accent hover:text-black;
+    @apply bg-terminal-dim text-terminal-text px-2 py-1 rounded-md text-xs mr-2 mb-2 inline-block transition-all hover:bg-terminal-accent hover:text-black font-medium;
+  }
+
+  /* Winter theme: Enhanced link and accent colors */
+  a.text-terminal-accent,
+  .text-terminal-accent {
+    color: #87CEEB !important;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  a.text-terminal-accent:hover,
+  .text-terminal-accent:hover {
+    color: #B0E0E6 !important;
+    text-shadow: 0 0 8px rgba(135, 206, 235, 0.5);
+  }
+
+  .bg-terminal-accent {
+    background-color: #87CEEB !important;
+  }
+
+  .bg-terminal-accent:hover {
+    background-color: #B0E0E6 !important;
+  }
+
+  .border-terminal-accent {
+    border-color: #87CEEB !important;
   }
 
   /* AI-like animations for SoC X RAID tags */
@@ -93,10 +127,28 @@
 
   @keyframes glow {
     0%, 100% {
-      box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+      box-shadow: 0 0 5px rgba(135, 206, 235, 0.5);
     }
     50% {
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.8), 0 0 25px rgba(59, 130, 246, 0.6);
+      box-shadow: 0 0 15px rgba(135, 206, 235, 0.8), 0 0 25px rgba(176, 224, 230, 0.6);
+    }
+  }
+
+  /* Winter theme: Snow particles animation */
+  @keyframes snow-fall {
+    0% {
+      transform: translateY(-100vh) translateX(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) translateX(20px);
+      opacity: 0;
     }
   }
 

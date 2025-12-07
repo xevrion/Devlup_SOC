@@ -9,7 +9,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ label, showRaidLogo = false }) => {
   const currentYear = new Date().getFullYear();
-  const footerLabel = label || `DevlUp Labs Summer of Code`;
+  const footerLabel = label || `DevlUp Projects Archive`;
   
   return (
     <footer className="bg-terminal border-t border-terminal-dim text-terminal-dim py-6">

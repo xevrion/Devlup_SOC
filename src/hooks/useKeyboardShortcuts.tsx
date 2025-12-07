@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from './use-toast';
 
@@ -19,6 +19,8 @@ interface ShortcutRoute {
  */
 export function useKeyboardShortcuts() {
   const navigate = useNavigate();
+  const shortcutsToastIdRef = useRef<string | null>(null);
+  const shortcutsDismissRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     // Define the navigation shortcuts
@@ -72,9 +74,18 @@ export function useKeyboardShortcuts() {
     };
   }, [navigate]);
 
-  // Return a method to display the help toast with all shortcuts
+  // Return a method to display the help toast with all shortcuts (toggleable)
   const showShortcutsHelp = () => {
-    toast({
+    // If a shortcuts toast is already open, dismiss it
+    if (shortcutsDismissRef.current) {
+      shortcutsDismissRef.current();
+      shortcutsDismissRef.current = null;
+      shortcutsToastIdRef.current = null;
+      return;
+    }
+
+    // Otherwise, show the shortcuts toast
+    const toastResult = toast({
       title: "Keyboard Shortcuts",
       description: (
         <div className="space-y-1">
@@ -88,7 +99,16 @@ export function useKeyboardShortcuts() {
         </div>
       ),
       duration: 5000,
+      onOpenChange: (open) => {
+        if (!open) {
+          shortcutsToastIdRef.current = null;
+          shortcutsDismissRef.current = null;
+        }
+      },
     });
+    
+    shortcutsToastIdRef.current = toastResult.id;
+    shortcutsDismissRef.current = toastResult.dismiss;
   };
 
   return { showShortcutsHelp };
