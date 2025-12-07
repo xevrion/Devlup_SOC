@@ -414,20 +414,20 @@ const Projects = () => {
         <TerminalHeader title="DevlUp Projects Archive" />
         <div className="terminal-body min-h-[500px] overflow-y-auto p-3 sm:p-6">
           <div className="mb-4 sm:mb-6">
-            <h1 className="text-xl sm:text-3xl font-bold text-terminal-text mb-2">{selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}</h1>
-            <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-terminal-text mb-2 sm:mb-3">{selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}</h1>
+            <div className="flex items-center gap-2 flex-wrap mb-2 sm:mb-3">
               {(
                 showArchived ? (['Ongoing','Completed','Archived'] as const) : (['Ongoing','Completed'] as const)
               ).map(tab => (
                 <button
                   key={tab}
                   onClick={() => navigate(`/projects/${tab.toLowerCase()}`)}
-                  className={`px-3 py-1 rounded text-sm ${selectedTab === tab ? (tab === 'Completed' ? 'bg-blue-300 text-black' : tab === 'Ongoing' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white') : 'bg-terminal-dim/20'}`}>
+                  className={`px-3 py-1.5 rounded text-xs sm:text-sm font-medium transition-colors ${selectedTab === tab ? (tab === 'Completed' ? 'bg-blue-300 text-black' : tab === 'Ongoing' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white') : 'bg-terminal-dim/20 hover:bg-terminal-dim/30'}`}>
                   {tab}
                 </button>
               ))}
             </div>
-            <p className="text-terminal-dim mt-2 sm:mt-3 text-sm sm:text-base">Use the tabs to switch between Live, Completed and Archived projects.</p>
+            <p className="text-terminal-dim mt-2 sm:mt-3 text-xs sm:text-sm md:text-base">Use the tabs to switch between Live, Completed and Archived projects.</p>
           </div>
 
           <div className="space-y-4 sm:space-y-6">
@@ -435,20 +435,20 @@ const Projects = () => {
             <div className="flex flex-col md:flex-row gap-2 sm:gap-3">
               {/* Search input */}
               <div className="relative flex-1">
-                <Search size={18} className="absolute left-3 top-2.5 text-terminal-dim" />
+                <Search size={16} className="absolute left-3 top-2.5 sm:top-3 text-terminal-dim sm:w-4 sm:h-4" />
                 <input
                   type="text"
                   placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 pr-3 py-2 w-full bg-terminal-dim/20 border border-terminal-dim/50 rounded focus:outline-none focus:border-terminal-accent"
+                  className="pl-8 sm:pl-9 pr-8 sm:pr-10 py-2 sm:py-2.5 w-full text-sm sm:text-base bg-terminal-dim/20 border border-terminal-dim/50 rounded focus:outline-none focus:border-terminal-accent"
                 />
                 {searchQuery && (
                   <button 
-                    className="absolute right-3 top-2.5 text-terminal-dim hover:text-terminal-text"
+                    className="absolute right-3 top-2.5 sm:top-3 text-terminal-dim hover:text-terminal-text"
                     onClick={() => setSearchQuery('')}
                   >
-                    <X size={18} />
+                    <X size={16} className="sm:w-4 sm:h-4" />
                   </button>
                 )}
               </div>

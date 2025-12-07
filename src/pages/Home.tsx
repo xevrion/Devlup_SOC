@@ -5,6 +5,7 @@ import { useTerminal } from '../context/TerminalContext';
 import TerminalHeader from '../components/TerminalHeader';
 import CommandOutput from '../components/CommandOutput';
 import CommandLine from '../components/CommandLine';
+import { useTheme } from '../components/ThemeProvider';
 
 const Home = () => {
   const { 
@@ -12,12 +13,31 @@ const Home = () => {
     executeCommand, 
     isProcessing 
   } = useTerminal();
+  const { themeId } = useTheme();
   
   const handleCommand = (command: string) => {
     // We just need to forward the command to the terminal context
     // The CommandLine component will now handle navigation directly
     executeCommand(command);
   };
+
+  // Get theme-specific announcement text and styling
+  const getThemeAnnouncement = () => {
+    if (themeId === 1) {
+      return {
+        text: "WoC projects are out!",
+        className: "bg-gradient-to-r from-blue-500/20 via-blue-400/30 to-blue-500/20 border-2 border-blue-400/60 shadow-lg shadow-blue-500/20"
+      };
+    } else if (themeId === 2) {
+      return {
+        text: "SoC projects are out!",
+        className: "bg-gradient-to-r from-green-500/20 via-green-400/30 to-green-500/20 border-2 border-green-400/60 shadow-lg shadow-green-500/20"
+      };
+    }
+    return null;
+  };
+
+  const announcement = getThemeAnnouncement();
 
   return (
     <div className="min-h-screen bg-terminal/95 p-2 sm:p-4">
@@ -32,6 +52,15 @@ const Home = () => {
             />
           </div>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-terminal-text mb-3 sm:mb-4 px-2">DevlUp Projects Archive</h1>
+          {announcement && (
+            <div className="mb-3 sm:mb-4 px-2 animate-in fade-in slide-in-from-top-2 duration-500">
+              <div className={`inline-block ${announcement.className} rounded-lg px-4 py-2 sm:px-6 sm:py-2.5 max-w-full backdrop-blur-sm transition-all hover:scale-105 hover:shadow-xl`}>
+                <p className="text-sm sm:text-base md:text-lg text-terminal-accent font-bold break-words tracking-wide">
+                  {announcement.text}
+                </p>
+              </div>
+            </div>
+          )}
           <p className="text-base sm:text-xl text-terminal-dim max-w-2xl mx-auto px-2">
             Explore all projects and programs. Browse, connect with mentors, and contribute to exciting initiatives.
           </p>

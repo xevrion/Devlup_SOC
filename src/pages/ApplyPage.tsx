@@ -16,8 +16,8 @@ const ApplyPage = () => {
         <TerminalHeader title="Contributor Application Form" />
         <div className="terminal-body min-h-[500px] overflow-y-auto p-3 sm:p-6">
           <div className="space-y-4">
-            <h2 className="text-xl text-terminal-text">Contributor Application</h2>
-            <p className="text-terminal-dim">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-terminal-text">Contributor Application</h2>
+            <p className="text-sm sm:text-base text-terminal-dim">
               Fill out the following form to express your interest in contributing to one of our projects.
             </p>
             <ContributorForm 

@@ -9,43 +9,43 @@ const Contact = () => {
         <TerminalHeader title="Contact DevlUp Labs" />
         <div className="terminal-body min-h-[500px] overflow-y-auto p-3 sm:p-6">
           {/* FAQ Section moved to top */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-terminal-text mb-4">Frequently Asked Questions</h2>
-            <div className="space-y-4">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-terminal-text mb-3 sm:mb-4">Frequently Asked Questions</h2>
+            <div className="space-y-3 sm:space-y-4">
               <div>
-                <h3 className="font-medium text-terminal-accent">How do I apply for a project?</h3>
-                <p className="text-terminal-dim mt-1">Visit our Projects page, select a project that interests you, and click the "Apply Now" button to submit your application.</p>
+                <h3 className="text-sm sm:text-base font-medium text-terminal-accent">How do I apply for a project?</h3>
+                <p className="text-xs sm:text-sm text-terminal-dim mt-1">Visit our Projects page, select a project that interests you, and click the "Apply Now" button to submit your application.</p>
               </div>
               <div>
-                <h3 className="font-medium text-terminal-accent">What is the application deadline?</h3>
-                <p className="text-terminal-dim mt-1">The application deadline for the current cycle will be notified via mail but we suggest you fill the form asap.</p>
+                <h3 className="text-sm sm:text-base font-medium text-terminal-accent">What is the application deadline?</h3>
+                <p className="text-xs sm:text-sm text-terminal-dim mt-1">The application deadline for the current cycle will be notified via mail but we suggest you fill the form asap.</p>
               </div>
               <div>
-                <h3 className="font-medium text-terminal-accent">Do I need prior open source experience?</h3>
-                <p className="text-terminal-dim mt-1">While prior experience is helpful, it's not required. We welcome enthusiastic beginners who are willing to learn.</p>
+                <h3 className="text-sm sm:text-base font-medium text-terminal-accent">Do I need prior open source experience?</h3>
+                <p className="text-xs sm:text-sm text-terminal-dim mt-1">While prior experience is helpful, it's not required. We welcome enthusiastic beginners who are willing to learn.</p>
               </div>
             </div>
           </div>
           
           {/* Get in Touch section */}
-          <div className="border-t border-terminal-dim pt-6 mt-6">
-            <h1 className="text-2xl font-bold text-terminal-text mb-6">Get in Touch</h1>
+          <div className="border-t border-terminal-dim pt-4 sm:pt-6 mt-4 sm:mt-6">
+            <h1 className="text-xl sm:text-2xl font-bold text-terminal-text mb-4 sm:mb-6">Get in Touch</h1>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
               {/* Contact Information */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
-                  <h2 className="text-xl font-semibold text-terminal-text mb-3">Contact Information</h2>
-                  <div className="space-y-3">
-                    <div className="flex items-center text-terminal-dim">
-                      <Mail className="mr-2 h-5 w-5 text-terminal-accent" />
-                      <a href="mailto:devluplabs@iitj.ac.in" className="hover:text-terminal-text">
+                  <h2 className="text-lg sm:text-xl font-semibold text-terminal-text mb-2 sm:mb-3">Contact Information</h2>
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="flex items-center text-terminal-dim text-sm sm:text-base">
+                      <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-terminal-accent flex-shrink-0" />
+                      <a href="mailto:devluplabs@iitj.ac.in" className="hover:text-terminal-text break-all">
                       devluplabs@iitj.ac.in
                       </a>
                     </div>
                                         
-                    <div className="flex items-start text-terminal-dim">
-                      <MapPin className="mr-2 h-5 w-5 text-terminal-accent flex-shrink-0 mt-0.5" />
+                    <div className="flex items-start text-terminal-dim text-sm sm:text-base">
+                      <MapPin className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-terminal-accent flex-shrink-0 mt-0.5" />
                       <span>
                         IIT Jodhpur
                       </span>
@@ -55,62 +55,62 @@ const Contact = () => {
                 
                 {/* Social Links */}
                 <div>
-                  <h2 className="text-xl font-semibold text-terminal-text mb-3">Connect With Us</h2>
-                  <div className="space-y-3">
-                    <div className="flex items-center text-terminal-dim">
-                      <Globe className="mr-2 h-5 w-5 text-terminal-accent" />
+                  <h2 className="text-lg sm:text-xl font-semibold text-terminal-text mb-2 sm:mb-3">Connect With Us</h2>
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="flex items-center text-terminal-dim text-sm sm:text-base">
+                      <Globe className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-terminal-accent flex-shrink-0" />
                       <a 
                         href="https://devluplabs.tech/#/" 
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-terminal-text flex items-center"
+                        className="hover:text-terminal-text flex items-center break-all"
                       >
                         devluplabs.tech/
-                        <ExternalLink className="ml-1 h-3 w-3" />
+                        <ExternalLink className="ml-1 h-3 w-3 flex-shrink-0" />
                       </a>
                     </div>
                     
-                    <div className="flex items-center text-terminal-dim">
-                      <Github className="mr-2 h-5 w-5 text-terminal-accent" />
+                    <div className="flex items-center text-terminal-dim text-sm sm:text-base">
+                      <Github className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-terminal-accent flex-shrink-0" />
                       <a 
                         href="https://github.com/devlup-labs" 
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-terminal-text flex items-center"
+                        className="hover:text-terminal-text flex items-center break-all"
                       >
                         github.com/devlup-labs
-                        <ExternalLink className="ml-1 h-3 w-3" />
+                        <ExternalLink className="ml-1 h-3 w-3 flex-shrink-0" />
                       </a>
                     </div>
                     
-                    <div className="flex items-center text-terminal-dim">
-                      <Linkedin className="mr-2 h-5 w-5 text-terminal-accent" />
+                    <div className="flex items-center text-terminal-dim text-sm sm:text-base">
+                      <Linkedin className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-terminal-accent flex-shrink-0" />
                       <a 
                         href="https://linkedin.com/company/devlup-labs" 
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-terminal-text flex items-center"
+                        className="hover:text-terminal-text flex items-center break-all"
                       >
                         linkedin.com/company/devlup-labs
-                        <ExternalLink className="ml-1 h-3 w-3" />
+                        <ExternalLink className="ml-1 h-3 w-3 flex-shrink-0" />
                       </a>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-semibold text-terminal-text mb-3">To Contribute</h2>
-                  <div className="space-y-3">
-                    <div className="flex items-center text-terminal-dim">
-                      <Github className="mr-2 h-5 w-5 text-terminal-accent" />
+                  <h2 className="text-lg sm:text-xl font-semibold text-terminal-text mb-2 sm:mb-3">To Contribute</h2>
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="flex items-center text-terminal-dim text-sm sm:text-base">
+                      <Github className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-terminal-accent flex-shrink-0" />
                       <a 
                         href="https://github.com/lakshyajain-0291/Devlup_SOC" 
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-terminal-text flex items-center"
+                        className="hover:text-terminal-text flex items-center break-all"
                       >
                         lakshyajain-0291/Devlup_SOC
-                        <ExternalLink className="ml-1 h-3 w-3" />
+                        <ExternalLink className="ml-1 h-3 w-3 flex-shrink-0" />
                       </a>
                     </div>
                     
