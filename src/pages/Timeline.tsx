@@ -64,7 +64,9 @@ const Timeline = () => {
       if(dateStr.includes("December")) return new Date(currentYear, 11, 20);
       if(dateStr.includes("January")) return new Date(currentYear + 1, 0, 5);
       if(dateStr.includes("March")) return new Date(currentYear + 1, 2, 15);
-    } catch (e) {}
+    } catch (e) {
+      // Return null on parse error
+    }
     return null;
   };
 
@@ -128,12 +130,19 @@ const Timeline = () => {
 
   // --- Styles Helpers ---
   const getStatusColor = (status: string) => {
-    if (isWinter) {
-        if(status === 'completed') return "text-blue-300 border-blue-400/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] bg-blue-950/30";
-        if(status === 'ongoing') return "text-cyan-300 border-cyan-400/50 shadow-[0_0_15px_rgba(34,211,238,0.3)] bg-cyan-950/30";
-        return "text-gray-400 border-gray-600/30 bg-gray-900/30";
+    // All nodes have the same base color
+    const baseColor = isWinter 
+      ? "text-cyan-300 border-cyan-400/50 bg-cyan-950/30"
+      : "text-green-400 border-green-500/30 bg-green-900/30";
+    
+    // Only ongoing nodes get a subtle highlight
+    if (status === 'ongoing') {
+      return isWinter
+        ? `${baseColor} shadow-[0_0_20px_rgba(34,211,238,0.4)] ring-2 ring-cyan-400/50`
+        : `${baseColor} shadow-[0_0_20px_rgba(74,222,128,0.4)] ring-2 ring-green-400/50`;
     }
-    return "text-green-400 border-green-500/30 bg-green-900/30";
+    
+    return baseColor;
   };
 
   const getTraceColor = (status: string) => {
@@ -147,7 +156,7 @@ const Timeline = () => {
 
   return (
     <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-2 sm:p-4 overflow-x-hidden">
-      <div className="terminal-window max-w-7xl w-full mx-auto my-4 sm:my-8">
+      <div className="terminal-window max-w-[100rem] w-full mx-auto my-4 sm:my-8">
         <TerminalHeader title="Program Timeline" />
         <div className="terminal-body min-h-[600px] p-4 sm:p-6 scrollbar-hide relative">
           
@@ -217,7 +226,8 @@ const Timeline = () => {
                             <div className="relative z-10 h-full w-full">
                                 {program.milestones.map((milestone, index) => {
                                 const totalItems = program.milestones.length;
-                                const leftPercentage = (index / (totalItems - 1)) * 100;
+                                // Cluster nodes more tightly: use 15% to 85% range instead of 0% to 100%
+                                const leftPercentage = 15 + (index / (totalItems - 1)) * 70;
                                 const isTop = index % 2 === 0;
                                 const status = milestone.status || "upcoming";
                                 const isActive = status === 'completed' || status === 'ongoing';
@@ -284,12 +294,19 @@ const Timeline = () => {
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 transition={{ delay: index * 0.2 + 0.5 }}
                                                 className={`relative p-4 rounded-xl border backdrop-blur-md text-center w-full
-                                                    ${isActive ? (isWinter ? "border-cyan-500/30 bg-cyan-950/40" : "border-green-500/30 bg-green-950/40") : "border-gray-700/30 bg-gray-900/20"}`}
+                                                    ${isWinter 
+                                                        ? status === 'ongoing' 
+                                                            ? "border-cyan-500/50 bg-cyan-950/40 shadow-[0_0_15px_rgba(34,211,238,0.2)]"
+                                                            : "border-cyan-500/30 bg-cyan-950/30"
+                                                        : status === 'ongoing'
+                                                            ? "border-green-500/50 bg-green-950/40 shadow-[0_0_15px_rgba(74,222,128,0.2)]"
+                                                            : "border-green-500/30 bg-green-950/30"
+                                                    }`}
                                             >
-                                                <h4 className={`font-bold text-base mb-1 ${isActive ? (isWinter ? "text-cyan-100" : "text-green-100") : "text-gray-300"}`}>
+                                                <h4 className={`font-bold text-base mb-1 ${isWinter ? "text-cyan-100" : "text-green-100"}`}>
                                                     {milestone.title}
                                                 </h4>
-                                                <div className={`flex items-center justify-center gap-2 text-xs font-mono mb-2 ${isActive ? (isWinter ? "text-cyan-400" : "text-green-400") : "text-gray-500"}`}>
+                                                <div className={`flex items-center justify-center gap-2 text-xs font-mono mb-2 ${isWinter ? "text-cyan-400" : "text-green-400"}`}>
                                                     <Clock size={12} />
                                                     {milestone.date}
                                                 </div>
