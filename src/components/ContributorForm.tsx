@@ -35,14 +35,14 @@ const ContributorForm: React.FC<ContributorFormProps> = ({ projects, initialProj
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       
-      <div className="bg-terminal-dim/20 p-4 rounded-md">
-        <h3 className="text-terminal-accent font-medium mb-3">Application Process</h3>
-        <p className="text-terminal-text mb-3">
+      <div className="bg-terminal-dim/20 p-3 sm:p-4 rounded-md">
+        <h3 className="text-sm sm:text-base md:text-lg text-terminal-accent font-medium mb-2 sm:mb-3">Application Process</h3>
+        <p className="text-xs sm:text-sm md:text-base text-terminal-text mb-2 sm:mb-3">
           To apply for this project, please submit your application through our Google Form where you can:
         </p>
-        <ul className="list-disc pl-5 text-terminal-dim mb-4 space-y-1">
+        <ul className="list-disc pl-4 sm:pl-5 text-xs sm:text-sm text-terminal-dim mb-3 sm:mb-4 space-y-1">
           <li>Provide your contact information</li>
           <li>Share your GitHub/LinkedIn profile</li>
           <li>Submit a proposal document</li>
@@ -55,14 +55,14 @@ const ContributorForm: React.FC<ContributorFormProps> = ({ projects, initialProj
           href={googleFormUrl}
           target="_blank" 
           rel="noopener noreferrer"
-          className="bg-terminal-accent hover:bg-terminal-accent/80 text-terminal-text px-6 py-3 rounded-md transition-colors flex items-center space-x-2"
+          className="bg-terminal-accent hover:bg-terminal-accent/80 text-black font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-md transition-colors flex items-center space-x-2 shadow-lg text-sm sm:text-base"
         >
           <span>Open Application Form</span>
-          <ExternalLink size={16} />
+          <ExternalLink size={14} className="sm:w-4 sm:h-4" />
         </a>
       </div>
       
-      <p className="text-terminal-dim text-sm text-center">
+      <p className="text-terminal-dim text-xs sm:text-sm text-center px-2">
         The form will open in a new tab. Please make sure to mention project you want to apply to in the form.
       </p>
     </div>

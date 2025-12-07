@@ -64,13 +64,18 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				terminal: {
-					DEFAULT: '#0D1117',
-					text: '#4AF626',
-					dim: '#2EA043',
-					accent: '#58A6FF',
-					error: '#F85149',
-					warning: '#F0883E',
-					success: '#3FB950'
+					DEFAULT: 'var(--terminal)',
+					text: 'var(--terminal-text)',
+					dim: 'var(--terminal-dim)',
+					accent: 'var(--terminal-accent)',
+					error: 'var(--terminal-error)',
+					warning: 'var(--terminal-warning)',
+					success: 'var(--terminal-success)',
+					winter: {
+						accent: '#87CEEB', // Sky blue
+						light: '#B0E0E6', // Powder blue
+						icy: '#E0F6FF' // Icy blue
+					}
 				}
 			},
 			fontFamily: {

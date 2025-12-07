@@ -32,11 +32,11 @@ const CommandLine: React.FC<CommandLineProps> = ({ onCommand, isProcessing }) =>
   }, [checkKonamiCode]);
 
   useEffect(() => {
-    // Focus input on mount and when processing completes
-    if (!isProcessing) {
+    // Focus input when processing completes (but not on initial mount)
+    if (!isProcessing && commandHistory.length > 0) {
       inputRef.current?.focus();
     }
-  }, [isProcessing]);
+  }, [isProcessing, commandHistory.length]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,6 +93,16 @@ const CommandLine: React.FC<CommandLineProps> = ({ onCommand, isProcessing }) =>
          (parts[0] === 'list' && (!parts[1] || parts[1] === 'projects'))) {
         setTimeout(() => {
           navigate('/projects');
+        }, 500);
+        setInput('');
+        setHistoryIndex(-1);
+        return;
+      }
+
+      // Timeline command
+      if (parts[0] === 'timeline' || parts[0] === 'tl') {
+        setTimeout(() => {
+          navigate('/timeline');
         }, 500);
         setInput('');
         setHistoryIndex(-1);
@@ -169,7 +179,6 @@ const CommandLine: React.FC<CommandLineProps> = ({ onCommand, isProcessing }) =>
         placeholder={isProcessing ? "Processing..." : "Type a command..."}
         disabled={isProcessing}
         autoComplete="off"
-        autoFocus
       />
       <div className="terminal-cursor"></div>
     </form>

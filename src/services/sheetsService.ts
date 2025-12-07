@@ -197,7 +197,10 @@ export const fetchProjects = async (): Promise<Project[]> => {
       const rawStatus = getField(['Status', 'status']);
       const rawCurrentDesc = getField(['Current Desc', 'Current Description', 'CurrentDesc', 'current desc']);
       const rawLiveLinks = getField(['Live Links', 'Live Link', 'Live Links (comma separated)', 'Live Links (comma separated)'] );
-  const rawProjectGithub = getField(['Project Github', 'Project GitHub', 'Project Github Url', 'Project GitHub Url', 'Project Git Repo', 'Github', 'GitHub']);
+      const rawProjectGithub = getField(['Project Github', 'Project GitHub', 'Project Github Url', 'Project GitHub Url', 'Project Git Repo', 'Github', 'GitHub']);
+      const rawIndustryMentor = getField(['Industry Mentor', 'Industry mentor', 'industry mentor', 'IndustryMentor']);
+      const rawIndustryMentorEmail = getField(['Industry Mentor Mail', 'Industry Mentor Email', 'Industry mentor mail', 'Industry mentor email']);
+      const rawIndustryMentorLinkedIn = getField(['Industry Mentor LinkedIn', 'Industry Mentor LinkedIn Url', 'Industry mentor linkedin', 'Industry mentor linkedin url']);
 
       const liveLinksArray = (rawLiveLinks || '').toString().split(/[,;\n\r]+/).map((l: string) => l.trim()).filter((l: string) => l);
       return {
@@ -230,9 +233,11 @@ export const fetchProjects = async (): Promise<Project[]> => {
         category: item['Category'] ? item['Category'].trim() : undefined,
         status: rawStatus ? rawStatus.toString().trim() : undefined,
         currentDesc: rawCurrentDesc ? rawCurrentDesc.toString().trim() : undefined,
-        liveLinks: liveLinksArray.length > 0 ? liveLinksArray : undefined
-        ,
-        projectGithub: rawProjectGithub ? rawProjectGithub.toString().trim() : undefined
+        liveLinks: liveLinksArray.length > 0 ? liveLinksArray : undefined,
+        projectGithub: rawProjectGithub ? rawProjectGithub.toString().trim() : undefined,
+        industryMentor: rawIndustryMentor ? rawIndustryMentor.toString().trim() : undefined,
+        industryMentorEmail: rawIndustryMentorEmail ? rawIndustryMentorEmail.toString().trim() : undefined,
+        industryMentorLinkedIn: rawIndustryMentorLinkedIn ? rawIndustryMentorLinkedIn.toString().trim() : undefined
       };
     });
     

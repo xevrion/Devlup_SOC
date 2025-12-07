@@ -28,7 +28,9 @@ const TerminalView: React.FC = () => {
   const allTechStacks = React.useMemo(() => {
     const techSet = new Set<string>();
     projects.forEach(project => {
-      project.techStack.forEach(tech => techSet.add(tech));
+      if (project.techStack && Array.isArray(project.techStack)) {
+        project.techStack.forEach(tech => techSet.add(tech));
+      }
     });
     return Array.from(techSet).sort();
   }, [projects]);
@@ -70,7 +72,7 @@ const TerminalView: React.FC = () => {
   return (
     <div className="terminal-window max-w-4xl w-full mx-auto my-8">
       <TerminalHeader title={
-        view === 'terminal' ? 'DevlUp Labs Summer of Code Terminal' : 
+        view === 'terminal' ? 'DevlUp Projects Archive Terminal' : 
         view === 'projects' ? 'Projects Dashboard' : 
         'Contributor Application Form'
       } />
@@ -220,12 +222,12 @@ const Index = () => {
               className="h-16 w-16"
             />
           </div>
-          <h1 className="text-3xl font-bold text-terminal-text mb-2">DevlUp Labs Summer of Code</h1>
-          <p className="text-terminal-dim max-w-2xl">Explore projects, connect with mentors, and apply to contribute to exciting open source initiatives.</p>
+          <h1 className="text-3xl font-bold text-terminal-text mb-2">DevlUp Projects Archive</h1>
+          <p className="text-terminal-dim max-w-2xl">Explore all projects and programs. Connect with mentors and contribute to exciting initiatives.</p>
         </header>
         <TerminalView />
         <footer className="mt-auto py-4 text-terminal-dim text-sm text-center">
-          <p>DevlUp Labs &copy; {new Date().getFullYear()} | Terminal Interface for Summer of Code Projects</p>
+          <p>DevlUp Labs &copy; {new Date().getFullYear()} | Terminal Interface for Projects Archive</p>
         </footer>
       </div>
     </TerminalProvider>

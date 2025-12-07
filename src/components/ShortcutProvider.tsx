@@ -18,15 +18,15 @@ const ShortcutProvider = ({ children }: ShortcutProviderProps) => {
     <>
       {children}
       
-      {/* Floating help button - moved to top-right to avoid obstructing footer */}
+      {/* Floating help button - hidden on mobile since phones can't use keyboard shortcuts */}
       <Button
         variant="outline"
         size="sm"
-        className="fixed top-16 right-4 bg-terminal-dim/90 text-terminal-text border-terminal-accent z-50 flex items-center gap-1 shadow-md"
+        className="hidden md:flex fixed top-16 right-4 bg-terminal-dim/90 text-terminal-text border-terminal-accent z-50 items-center gap-1 shadow-md text-sm"
         onClick={showShortcutsHelp}
       >
         <Keyboard className="h-4 w-4" />
-        <span className="hidden sm:inline">Shortcuts</span>
+        <span>Shortcuts</span>
       </Button>
     </>
   );

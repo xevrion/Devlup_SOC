@@ -20,7 +20,9 @@ const Projects = () => {
   const allTechStacks = React.useMemo(() => {
     const techSet = new Set<string>();
     projects.forEach(project => {
-      project.techStack.forEach(tech => techSet.add(tech));
+      if (project.techStack && Array.isArray(project.techStack)) {
+        project.techStack.forEach(tech => techSet.add(tech));
+      }
     });
     return Array.from(techSet).sort();
   }, [projects]);
@@ -185,23 +187,23 @@ const Projects = () => {
     const mentors = [project.mentor, project.mentor2, project.mentor3].filter(Boolean);
 
     return (
-      <div className="border border-terminal-dim rounded-lg p-4 hover:border-terminal-accent transition-all group">
+      <div className="border border-terminal-dim rounded-lg p-3 sm:p-4 hover:border-terminal-accent transition-all group">
         <div className="flex justify-between items-start mb-2">
-          <div className="min-w-0">
-            <h3 className="font-semibold text-lg text-terminal-text truncate">{project.name}</h3>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold text-base sm:text-lg text-terminal-text break-words">{project.name}</h3>
             {project.currentDesc && (
               // allow current description to wrap to next line(s) on narrow screens
-              <p className="text-terminal-dim text-sm mt-1 whitespace-normal break-words">{project.currentDesc}</p>
+              <p className="text-terminal-dim text-xs sm:text-sm mt-1 whitespace-normal break-words">{project.currentDesc}</p>
             )}
           </div>
         </div>
 
-        <div className="flex items-center gap-2 mt-3 mb-3">
+        <div className="flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 mb-2 sm:mb-3 flex-wrap">
           {(['Preview','Mentors','Links'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setPanel(tab)}
-              className={`px-3 py-1 rounded text-sm ${panel === tab ? 'bg-terminal-accent text-black' : 'bg-terminal-dim/20'}`}
+              className={`px-2 sm:px-3 py-1 rounded text-xs sm:text-sm ${panel === tab ? 'bg-terminal-accent text-black font-semibold' : 'bg-terminal-dim/20'}`}
             >
               {tab}
             </button>
@@ -274,23 +276,57 @@ const Projects = () => {
 
           {panel === 'Mentors' && (
             <div>
-              {mentors.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {mentors.map((m, i) => (
-                    <div key={i} className="border border-terminal-dim p-3 rounded">
-                      <div className="font-semibold text-terminal-text">{m.name || m}</div>
-                      {m.role && <div className="text-terminal-dim text-sm">{m.role}</div>}
-                      <div className="mt-2 space-y-1">
-                        {m.email && <a className="text-terminal-accent text-sm" href={`mailto:${m.email}`}>Email </a>}
-                        {m.linkedin && <a className="text-terminal-accent text-sm" href={m.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn  </a>}
-                        {m.github && <a className="text-terminal-accent text-sm" href={m.github} target="_blank" rel="noopener noreferrer">Github</a>}
-                      </div>
+              {/* Industry Mentor Section - only show if present */}
+              {project.industryMentor && project.industryMentor.trim() && (
+                <div className="mb-4 sm:mb-6">
+                  <h3 className="text-base sm:text-lg text-terminal-text mb-2 sm:mb-3 flex items-center gap-2">
+                    Industry Mentor
+                    {project.status && project.status.toLowerCase() === 'ongoing' && (
+                      <span className="px-2 py-0.5 rounded text-xs font-semibold bg-purple-600/90 text-white industry-mentor-badge">
+                        <span className="relative z-10">Industry Mentor</span>
+                      </span>
+                    )}
+                  </h3>
+                  <div className="border border-purple-500/50 bg-purple-950/30 p-2 sm:p-3 rounded shadow-[0_0_15px_rgba(147,51,234,0.3)]">
+                    <div className="font-semibold text-sm sm:text-base text-purple-200 break-words">{project.industryMentor}</div>
+                    <div className="text-purple-300/80 text-xs sm:text-sm mt-1 mb-2">Industry Mentor</div>
+                    <div className="mt-2 space-y-1 flex flex-wrap gap-2">
+                      {project.industryMentorEmail && (
+                        <a className="text-purple-400 hover:text-purple-300 text-xs sm:text-sm" href={`mailto:${project.industryMentorEmail}`}>
+                          Email
+                        </a>
+                      )}
+                      {project.industryMentorLinkedIn && (
+                        <a className="text-purple-400 hover:text-purple-300 text-xs sm:text-sm" href={project.industryMentorLinkedIn} target="_blank" rel="noopener noreferrer">
+                          LinkedIn
+                        </a>
+                      )}
                     </div>
-                  ))}
+                  </div>
                 </div>
-              ) : (
-                <div className="text-terminal-dim">No mentors listed.</div>
               )}
+              
+              {/* Project Mentors Section */}
+              <div>
+                <h3 className="text-base sm:text-lg text-terminal-text mb-2 sm:mb-3">Project Mentors ({mentors.length})</h3>
+                {mentors.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                    {mentors.map((m, i) => (
+                      <div key={i} className="border border-terminal-dim p-2 sm:p-3 rounded">
+                        <div className="font-semibold text-sm sm:text-base text-terminal-text break-words">{m.name || m}</div>
+                        {m.role && <div className="text-terminal-dim text-xs sm:text-sm">{m.role}</div>}
+                        <div className="mt-2 space-y-1 flex flex-wrap gap-2">
+                          {m.email && <a className="text-terminal-accent text-xs sm:text-sm" href={`mailto:${m.email}`}>Email</a>}
+                          {m.linkedin && <a className="text-terminal-accent text-xs sm:text-sm" href={m.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
+                          {m.github && <a className="text-terminal-accent text-xs sm:text-sm" href={m.github} target="_blank" rel="noopener noreferrer">Github</a>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-terminal-dim text-sm">No mentors listed.</div>
+                )}
+              </div>
             </div>
           )}
 
@@ -407,46 +443,46 @@ const Projects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-terminal flex flex-col items-center p-4">
-      <div className="terminal-window max-w-6xl w-full mx-auto my-8">
-        <TerminalHeader title="DevlUp Labs Projects" />
-        <div className="terminal-body min-h-[500px] overflow-y-auto p-6">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-terminal-text mb-2">{selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}</h1>
-            <div className="flex items-center gap-2">
+    <div className="min-h-screen bg-terminal/95 flex flex-col items-center p-2 sm:p-4">
+      <div className="terminal-window max-w-6xl w-full mx-auto my-4 sm:my-8">
+        <TerminalHeader title="DevlUp Projects Archive" />
+        <div className="terminal-body min-h-[500px] overflow-y-auto p-3 sm:p-6">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-terminal-text mb-2 sm:mb-3">{selectedTab === 'Ongoing' ? 'Live Projects' : selectedTab === 'Completed' ? 'Completed Projects' : 'Archived Projects'}</h1>
+            <div className="flex items-center gap-2 flex-wrap mb-2 sm:mb-3">
               {(
                 showArchived ? (['Ongoing','Completed','Archived'] as const) : (['Ongoing','Completed'] as const)
               ).map(tab => (
                 <button
                   key={tab}
                   onClick={() => navigate(`/projects/${tab.toLowerCase()}`)}
-                  className={`px-3 py-1 rounded text-sm ${selectedTab === tab ? (tab === 'Completed' ? 'bg-blue-300 text-black' : tab === 'Ongoing' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white') : 'bg-terminal-dim/20'}`}>
+                  className={`px-3 py-1.5 rounded text-xs sm:text-sm font-medium transition-colors ${selectedTab === tab ? (tab === 'Completed' ? 'bg-blue-300 text-black' : tab === 'Ongoing' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white') : 'bg-terminal-dim/20 hover:bg-terminal-dim/30'}`}>
                   {tab}
                 </button>
               ))}
             </div>
-            <p className="text-terminal-dim mt-3">Use the tabs to switch between Live, Completed and Archived projects.</p>
+            <p className="text-terminal-dim mt-2 sm:mt-3 text-xs sm:text-sm md:text-base">Use the tabs to switch between Live, Completed and Archived projects.</p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Search and filter controls */}
-            <div className="flex flex-col md:flex-row gap-3">
+            <div className="flex flex-col md:flex-row gap-2 sm:gap-3">
               {/* Search input */}
               <div className="relative flex-1">
-                <Search size={18} className="absolute left-3 top-2.5 text-terminal-dim" />
+                <Search size={16} className="absolute left-3 top-2.5 sm:top-3 text-terminal-dim sm:w-4 sm:h-4" />
                 <input
                   type="text"
                   placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 pr-3 py-2 w-full bg-terminal-dim/20 border border-terminal-dim/50 rounded focus:outline-none focus:border-terminal-accent"
+                  className="pl-8 sm:pl-9 pr-8 sm:pr-10 py-2 sm:py-2.5 w-full text-sm sm:text-base bg-terminal-dim/20 border border-terminal-dim/50 rounded focus:outline-none focus:border-terminal-accent"
                 />
                 {searchQuery && (
                   <button 
-                    className="absolute right-3 top-2.5 text-terminal-dim hover:text-terminal-text"
+                    className="absolute right-3 top-2.5 sm:top-3 text-terminal-dim hover:text-terminal-text"
                     onClick={() => setSearchQuery('')}
                   >
-                    <X size={18} />
+                    <X size={16} className="sm:w-4 sm:h-4" />
                   </button>
                 )}
               </div>

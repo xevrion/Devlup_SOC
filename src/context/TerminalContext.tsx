@@ -61,9 +61,11 @@ KEYBOARD SHORTCUTS
 Navigation:
   Alt+H       - Navigate to Home page
   Alt+P       - Navigate to Projects page
+  Alt+A       - Navigate to Apply page
+  Alt+T       - Navigate to Timeline page
   Alt+S       - Navigate to Stats page
   Alt+C       - Navigate to Contact page
-  Alt+Shift+T - Switch to Terminal View
+  Alt+Shift+T - Navigate to Home and focus Terminal
 
 Terminal Commands:
   shortcuts   - Show this help
@@ -107,7 +109,7 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
   const [commandHistory, setCommandHistory] = useState<CommandResponse[]>([
     { 
       type: 'response', 
-      content: `Welcome to DevlUp Labs Summer of Code Terminal!\nType 'help' to see available commands.` 
+      content: `Welcome to DevlUp Labs Projects Archive Terminal!\nType 'help' to see available commands or 'shortcuts' for keyboard shortcuts.` 
     }
   ]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -290,9 +292,12 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
   search [query], s [query]  Search for projects
   filter [tech], f [tech]    Filter projects by technology
   view [id], v [id], [id]    View details of a specific project
+  timeline, tl             Navigate to Timeline page
   stats [options]          View site analytics data
   mentors, m               Show all project mentors
-  shortcuts, keys          Display keyboard shortcuts`
+  apply, a                 Open contributor application form
+  shortcuts, keys          Display keyboard shortcuts
+  about                     Show information about this terminal`
         });
         break;
         
@@ -459,22 +464,21 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
         });
         break;
         
-      // Apply command disabled while applications are closed
-      /*
-      case 'apply':
-      case 'a':
-        setView('form');
+      case 'timeline':
+      case 'tl':
+        window.location.href = '/timeline';
         addToHistory({ 
-          type: 'form', 
-          content: 'Opening contributor application form...' 
+          type: 'response', 
+          content: 'Opening Timeline page...' 
         });
         break;
-      */
+        
       case 'apply':
       case 'a':
-        addToHistory({
-          type: 'response',
-          content: 'Applications are currently closed. Please check back later.'
+        window.location.href = '/apply';
+        addToHistory({ 
+          type: 'response', 
+          content: 'Opening contributor application form...' 
         });
         break;
         
@@ -558,7 +562,7 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({ children }) 
       case 'about':
         addToHistory({ 
           type: 'response',
-          content: 'DevlUp Labs Summer of Code - A terminal-themed platform for open source projects'
+          content: 'DevlUp Labs Projects Archive - A terminal-themed platform for all projects and programs'
         });
         addToHistory({ 
           type: 'code',
@@ -567,7 +571,17 @@ Built with:
 - React 18 with TypeScript
 - Tailwind CSS with custom terminal theme
 - Shadcn/UI components
+- Vite for fast development
+- Google Sheets API for project data
 - Love for coding 💻❤️
+
+Features:
+- Browse projects organized by season (SoC, WoC, etc.)
+- Search and filter projects by technology
+- View detailed project information
+- Explore timeline of all projects
+- Apply to contribute to projects
+- View site analytics and statistics
 
 Try some hidden commands! Type "easteregg" to see a hint.`
         });
