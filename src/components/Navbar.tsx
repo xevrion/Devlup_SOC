@@ -51,7 +51,7 @@ const Navbar = () => {
     { path: '/', icon: Home, label: 'Home', shortcut: 'Alt+H' },
     { path: '/projects', icon: Briefcase, label: 'Projects', shortcut: 'Alt+P' },
     { path: '/apply', icon: User, label: 'Apply', shortcut: 'Alt+A' },
-    { path: '/timeline', icon: Calendar, label: 'Timeline' },
+    { path: '/timeline', icon: Calendar, label: 'Timeline', shortcut: 'Alt+T' },
     { path: '/stats', icon: BarChart, label: 'Stats', shortcut: 'Alt+S' },
     { path: '/contact', icon: Phone, label: 'Contact', shortcut: 'Alt+C' },
   ];

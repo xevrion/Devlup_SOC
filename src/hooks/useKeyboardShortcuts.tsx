@@ -9,6 +9,7 @@ interface ShortcutRoute {
   altKey?: boolean;
   ctrlKey?: boolean;
   shiftKey?: boolean;
+  focusTerminal?: boolean;
 }
 
 /**
@@ -25,12 +26,13 @@ export function useKeyboardShortcuts() {
   useEffect(() => {
     // Define the navigation shortcuts
     const shortcuts: ShortcutRoute[] = [
-      { key: 'h', route: '/', description: 'Home', altKey: true },
+      { key: 'h', route: '/', description: 'Home', altKey: true, focusTerminal: false },
       { key: 'p', route: '/projects', description: 'Projects', altKey: true },
       { key: 'a', route: '/apply', description: 'Apply', altKey: true },
+      { key: 't', route: '/timeline', description: 'Timeline', altKey: true },
       { key: 's', route: '/stats', description: 'Stats', altKey: true },
       { key: 'c', route: '/contact', description: 'Contact', altKey: true },
-      { key: 't', route: '/', description: 'Terminal View', altKey: true, shiftKey: true },
+      { key: 't', route: '/', description: 'Terminal View', altKey: true, shiftKey: true, focusTerminal: true },
       { key: '/', route: '/', description: 'Help', altKey: true, shiftKey: true },
     ];
 
@@ -46,17 +48,36 @@ export function useKeyboardShortcuts() {
       }
 
       // Find the matching shortcut
-      const shortcut = shortcuts.find(
+      // Sort shortcuts to check more specific ones (with shiftKey/ctrlKey) first
+      const sortedShortcuts = [...shortcuts].sort((a, b) => {
+        // Prioritize shortcuts with shiftKey or ctrlKey defined
+        const aSpecificity = (a.shiftKey !== undefined ? 1 : 0) + (a.ctrlKey !== undefined ? 1 : 0);
+        const bSpecificity = (b.shiftKey !== undefined ? 1 : 0) + (b.ctrlKey !== undefined ? 1 : 0);
+        return bSpecificity - aSpecificity;
+      });
+
+      const shortcut = sortedShortcuts.find(
         (s) =>
           s.key.toLowerCase() === event.key.toLowerCase() &&
           s.altKey === event.altKey &&
-          (s.ctrlKey === undefined || s.ctrlKey === event.ctrlKey) &&
-          (s.shiftKey === undefined || s.shiftKey === event.shiftKey)
+          (s.ctrlKey === undefined ? !event.ctrlKey : s.ctrlKey === event.ctrlKey) &&
+          (s.shiftKey === undefined ? !event.shiftKey : s.shiftKey === event.shiftKey)
       );
 
       if (shortcut) {
         event.preventDefault();
         navigate(shortcut.route);
+        
+        // If this shortcut should focus the terminal, do so after navigation
+        if (shortcut.focusTerminal) {
+          // Wait for navigation to complete, then focus the terminal input
+          setTimeout(() => {
+            const terminalInput = document.querySelector('.terminal-input') as HTMLInputElement;
+            if (terminalInput) {
+              terminalInput.focus();
+            }
+          }, 100);
+        }
         
         // Show a toast notification
         toast({
@@ -93,6 +114,7 @@ export function useKeyboardShortcuts() {
           <p><kbd className="px-1 bg-terminal-dim rounded">Alt+H</kbd> - Home</p>
           <p><kbd className="px-1 bg-terminal-dim rounded">Alt+P</kbd> - Projects</p>
           <p><kbd className="px-1 bg-terminal-dim rounded">Alt+A</kbd> - Apply</p>
+          <p><kbd className="px-1 bg-terminal-dim rounded">Alt+T</kbd> - Timeline</p>
           <p><kbd className="px-1 bg-terminal-dim rounded">Alt+S</kbd> - Stats</p>
           <p><kbd className="px-1 bg-terminal-dim rounded">Alt+C</kbd> - Contact</p>
           <p><kbd className="px-1 bg-terminal-dim rounded">Alt+Shift+T</kbd> - Terminal View</p>
