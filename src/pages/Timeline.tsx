@@ -82,7 +82,7 @@ const Timeline = () => {
           endDate: "20th December",
           description: "We accept proposals from contributors",
           icon: FileText,
-          status: "completed"
+          status: "ongoing"
         },
         {
           id: "woc-landing",
@@ -91,7 +91,7 @@ const Timeline = () => {
           endDate: "5th January",
           description: "Public landing page will be available",
           icon: Rocket,
-          status: "completed"
+          status: "upcoming"
         },
         {
           id: "woc-start",
@@ -99,7 +99,7 @@ const Timeline = () => {
           date: "First week of January",
           description: "Contributors start working on selected projects",
           icon: CheckCircle2,
-          status: "ongoing"
+          status: "upcoming"
         },
         {
           id: "woc-mid",
