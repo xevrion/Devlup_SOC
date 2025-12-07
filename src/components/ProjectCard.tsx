@@ -35,6 +35,7 @@ export interface Project {
   currentDesc?: string; // Short description of current/completed work
   liveLinks?: string[]; // Array of live/demo links
   projectGithub?: string; // optional project github url
+  industryMentor?: string; // Industry Mentor name
 }
 
 interface ProjectCardProps {
@@ -67,11 +68,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </h2>
           {/* Status badge intentionally not shown on list cards (kept in detail page) */}
           {/* Category badge */}
-          {categoryLabel && (
-            <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-semibold ${categoryClass}`}>
-              <span className="relative z-10">{categoryLabel}</span>
-            </span>
-          )}
+          <div className="flex flex-wrap gap-2 mt-1">
+            {categoryLabel && (
+              <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ${categoryClass}`}>
+                <span className="relative z-10">{categoryLabel}</span>
+              </span>
+            )}
+            {/* Industry Mentor badge - only show for ongoing WoC projects */}
+            {project.status && project.status.toLowerCase() === 'ongoing' && project.industryMentor && project.industryMentor.trim() && (
+              <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-purple-600/90 text-white industry-mentor-badge">
+                <span className="relative z-10">Industry Mentor</span>
+              </span>
+            )}
+          </div>
         </div>
         <ChevronRight className="text-terminal-dim group-hover:text-terminal-accent flex-shrink-0 mt-1" size={20} />
       </div>

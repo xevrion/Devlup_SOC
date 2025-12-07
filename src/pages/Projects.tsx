@@ -276,23 +276,45 @@ const Projects = () => {
 
           {panel === 'Mentors' && (
             <div>
-              {mentors.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                  {mentors.map((m, i) => (
-                    <div key={i} className="border border-terminal-dim p-2 sm:p-3 rounded">
-                      <div className="font-semibold text-sm sm:text-base text-terminal-text break-words">{m.name || m}</div>
-                      {m.role && <div className="text-terminal-dim text-xs sm:text-sm">{m.role}</div>}
-                      <div className="mt-2 space-y-1 flex flex-wrap gap-2">
-                        {m.email && <a className="text-terminal-accent text-xs sm:text-sm" href={`mailto:${m.email}`}>Email</a>}
-                        {m.linkedin && <a className="text-terminal-accent text-xs sm:text-sm" href={m.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
-                        {m.github && <a className="text-terminal-accent text-xs sm:text-sm" href={m.github} target="_blank" rel="noopener noreferrer">Github</a>}
-                      </div>
-                    </div>
-                  ))}
+              {/* Industry Mentor Section - only show if present */}
+              {project.industryMentor && project.industryMentor.trim() && (
+                <div className="mb-4 sm:mb-6">
+                  <h3 className="text-base sm:text-lg text-terminal-text mb-2 sm:mb-3 flex items-center gap-2">
+                    Industry Mentor
+                    {project.status && project.status.toLowerCase() === 'ongoing' && (
+                      <span className="px-2 py-0.5 rounded text-xs font-semibold bg-purple-600/90 text-white industry-mentor-badge">
+                        <span className="relative z-10">Industry Mentor</span>
+                      </span>
+                    )}
+                  </h3>
+                  <div className="border border-purple-500/50 bg-purple-950/30 p-2 sm:p-3 rounded shadow-[0_0_15px_rgba(147,51,234,0.3)]">
+                    <div className="font-semibold text-sm sm:text-base text-purple-200 break-words">{project.industryMentor}</div>
+                    <div className="text-purple-300/80 text-xs sm:text-sm mt-1">Industry Mentor</div>
+                  </div>
                 </div>
-              ) : (
-                <div className="text-terminal-dim text-sm">No mentors listed.</div>
               )}
+              
+              {/* Project Mentors Section */}
+              <div>
+                <h3 className="text-base sm:text-lg text-terminal-text mb-2 sm:mb-3">Project Mentors ({mentors.length})</h3>
+                {mentors.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                    {mentors.map((m, i) => (
+                      <div key={i} className="border border-terminal-dim p-2 sm:p-3 rounded">
+                        <div className="font-semibold text-sm sm:text-base text-terminal-text break-words">{m.name || m}</div>
+                        {m.role && <div className="text-terminal-dim text-xs sm:text-sm">{m.role}</div>}
+                        <div className="mt-2 space-y-1 flex flex-wrap gap-2">
+                          {m.email && <a className="text-terminal-accent text-xs sm:text-sm" href={`mailto:${m.email}`}>Email</a>}
+                          {m.linkedin && <a className="text-terminal-accent text-xs sm:text-sm" href={m.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
+                          {m.github && <a className="text-terminal-accent text-xs sm:text-sm" href={m.github} target="_blank" rel="noopener noreferrer">Github</a>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-terminal-dim text-sm">No mentors listed.</div>
+                )}
+              </div>
             </div>
           )}
 

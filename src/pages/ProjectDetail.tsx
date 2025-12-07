@@ -152,11 +152,19 @@ const ProjectDetail = () => {
               <div>
                 <h1 className="text-xl sm:text-2xl font-bold text-terminal-text mb-1 break-words">{project.name}</h1>
                 {/* Category badge */}
-                {categoryLabel && (
-                  <span className={`inline-block mb-3 px-2 py-0.5 rounded text-xs font-semibold ${categoryClass}`}>
-                    <span className="relative z-10">{categoryLabel}</span>
-                  </span>
-                )}
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {categoryLabel && (
+                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ${categoryClass}`}>
+                      <span className="relative z-10">{categoryLabel}</span>
+                    </span>
+                  )}
+                  {/* Industry Mentor badge - only show for ongoing WoC projects */}
+                  {project.status && project.status.toLowerCase() === 'ongoing' && project.industryMentor && project.industryMentor.trim() && (
+                    <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-purple-600/90 text-white industry-mentor-badge">
+                      <span className="relative z-10">Industry Mentor</span>
+                    </span>
+                  )}
+                </div>
                 {/* Status badge */}
                 {project.status && (
                   <div className="mb-2">
@@ -257,11 +265,37 @@ const ProjectDetail = () => {
 
                     {detailTab === 'Mentors' && (
                       <div>
-                        <h2 className="text-lg sm:text-xl text-terminal-text mb-3">Project Mentors ({mentors.length})</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                          {renderMentorCard(project.mentor, 1)}
-                          {renderMentorCard(project.mentor2, 2)}
-                          {renderMentorCard(project.mentor3, 3)}
+                        {/* Industry Mentor Section - only show if present */}
+                        {project.industryMentor && project.industryMentor.trim() && (
+                          <div className="mb-6">
+                            <h2 className="text-lg sm:text-xl text-terminal-text mb-3 flex items-center gap-2">
+                              Industry Mentor
+                              {/* {project.status && project.status.toLowerCase() === 'ongoing' && (
+                                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-purple-600/90 text-white shadow-[0_0_10px_rgba(147,51,234,0.5)]">
+                                  Industry Mentor
+                                </span>
+                              )} */}
+                            </h2>
+                            <div className="w-full sm:w-1/2 lg:w-1/3">
+                              <div className="border border-purple-500/50 bg-purple-950/30 p-4 rounded-md shadow-[0_0_15px_rgba(147,51,234,0.3)]">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <User size={18} className="text-purple-400" />
+                                  <h3 className="font-semibold text-purple-200">{project.industryMentor}</h3>
+                                </div>
+                                <p className="text-purple-300/80 text-sm">Industry Mentor</p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Project Mentors Section */}
+                        <div>
+                          <h2 className="text-lg sm:text-xl text-terminal-text mb-3">Project Mentors ({mentors.length})</h2>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                            {renderMentorCard(project.mentor, 1)}
+                            {renderMentorCard(project.mentor2, 2)}
+                            {renderMentorCard(project.mentor3, 3)}
+                          </div>
                         </div>
                       </div>
                     )}
