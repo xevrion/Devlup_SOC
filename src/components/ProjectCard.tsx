@@ -36,6 +36,8 @@ export interface Project {
   liveLinks?: string[]; // Array of live/demo links
   projectGithub?: string; // optional project github url
   industryMentor?: string; // Industry Mentor name
+  industryMentorEmail?: string; // Industry Mentor email
+  industryMentorLinkedIn?: string; // Industry Mentor LinkedIn URL
 }
 
 interface ProjectCardProps {
@@ -68,19 +70,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </h2>
           {/* Status badge intentionally not shown on list cards (kept in detail page) */}
           {/* Category badge */}
-          <div className="flex flex-wrap gap-2 mt-1">
-            {categoryLabel && (
-              <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ${categoryClass}`}>
-                <span className="relative z-10">{categoryLabel}</span>
-              </span>
-            )}
-            {/* Industry Mentor badge - only show for ongoing WoC projects */}
-            {project.status && project.status.toLowerCase() === 'ongoing' && project.industryMentor && project.industryMentor.trim() && (
-              <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-purple-600/90 text-white industry-mentor-badge">
-                <span className="relative z-10">Industry Mentor</span>
-              </span>
-            )}
-          </div>
+          {categoryLabel && (
+            <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-semibold ${categoryClass}`}>
+              <span className="relative z-10">{categoryLabel}</span>
+            </span>
+          )}
         </div>
         <ChevronRight className="text-terminal-dim group-hover:text-terminal-accent flex-shrink-0 mt-1" size={20} />
       </div>
@@ -132,10 +126,22 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             )}
             
             <div className="border-t border-terminal-dim pt-3 sm:pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-              <span className="text-xs sm:text-sm text-terminal-dim">
-                {project.mentor && project.mentor2 && project.mentor3 ? '3 mentors' : 
-                 project.mentor && project.mentor2 ? '2 mentors' : '1 mentor'}
-              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs sm:text-sm text-terminal-dim">
+                  {project.mentor && project.mentor2 && project.mentor3 ? '3 mentors' : 
+                   project.mentor && project.mentor2 ? '2 mentors' : '1 mentor'}
+                </span>
+                {project.industryMentor && project.industryMentor.trim() && (() => {
+                  // Count industry mentors (handle comma-separated values)
+                  const industryMentors = project.industryMentor.split(',').map(m => m.trim()).filter(m => m);
+                  const count = industryMentors.length;
+                  return (
+                    <span className="text-xs sm:text-sm text-purple-400">
+                      | {count} Industry mentor{count > 1 ? 's' : ''}
+                    </span>
+                  );
+                })()}
+              </div>
               <span className="text-terminal-accent text-xs sm:text-sm">View Details</span>
             </div>
           </div>

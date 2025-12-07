@@ -159,11 +159,11 @@ const ProjectDetail = () => {
                     </span>
                   )}
                   {/* Industry Mentor badge - only show for ongoing WoC projects */}
-                  {project.status && project.status.toLowerCase() === 'ongoing' && project.industryMentor && project.industryMentor.trim() && (
+                  {/* {project.status && project.status.toLowerCase() === 'ongoing' && project.industryMentor && project.industryMentor.trim() && (
                     <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-purple-600/90 text-white industry-mentor-badge">
                       <span className="relative z-10">Industry Mentor</span>
                     </span>
-                  )}
+                  )} */}
                 </div>
                 {/* Status badge */}
                 {project.status && (
@@ -282,7 +282,29 @@ const ProjectDetail = () => {
                                   <User size={18} className="text-purple-400" />
                                   <h3 className="font-semibold text-purple-200">{project.industryMentor}</h3>
                                 </div>
-                                <p className="text-purple-300/80 text-sm">Industry Mentor</p>
+                                <p className="text-purple-300/80 text-sm mb-3">Industry Mentor</p>
+                                <div className="space-y-2">
+                                  {project.industryMentorEmail && (
+                                    <a 
+                                      href={`mailto:${project.industryMentorEmail}`} 
+                                      className="flex items-center gap-2 text-purple-400 hover:text-purple-300 hover:underline text-sm"
+                                    >
+                                      <Mail size={14} />
+                                      <span>{project.industryMentorEmail}</span>
+                                    </a>
+                                  )}
+                                  {project.industryMentorLinkedIn && (
+                                    <a 
+                                      href={project.industryMentorLinkedIn}
+                                      className="flex items-center gap-2 text-purple-400 hover:text-purple-300 hover:underline text-sm"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      <Linkedin size={14} />
+                                      <span>LinkedIn Profile</span>
+                                    </a>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>

@@ -289,7 +289,19 @@ const Projects = () => {
                   </h3>
                   <div className="border border-purple-500/50 bg-purple-950/30 p-2 sm:p-3 rounded shadow-[0_0_15px_rgba(147,51,234,0.3)]">
                     <div className="font-semibold text-sm sm:text-base text-purple-200 break-words">{project.industryMentor}</div>
-                    <div className="text-purple-300/80 text-xs sm:text-sm mt-1">Industry Mentor</div>
+                    <div className="text-purple-300/80 text-xs sm:text-sm mt-1 mb-2">Industry Mentor</div>
+                    <div className="mt-2 space-y-1 flex flex-wrap gap-2">
+                      {project.industryMentorEmail && (
+                        <a className="text-purple-400 hover:text-purple-300 text-xs sm:text-sm" href={`mailto:${project.industryMentorEmail}`}>
+                          Email
+                        </a>
+                      )}
+                      {project.industryMentorLinkedIn && (
+                        <a className="text-purple-400 hover:text-purple-300 text-xs sm:text-sm" href={project.industryMentorLinkedIn} target="_blank" rel="noopener noreferrer">
+                          LinkedIn
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
