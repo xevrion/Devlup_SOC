@@ -263,11 +263,7 @@ const Timeline = () => {
 
             {/* Program Timelines */}
             {programs.map((program, programIndex) => (
-              <div key={programIndex} className="relative pl-6 sm:pl-8 md:pl-12">
-                {/* Timeline line and dot */}
-                <div className="absolute left-2 sm:left-3 md:left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-terminal-accent via-terminal-accent/50 to-terminal-dim/30"></div>
-                <div className="absolute left-2 sm:left-3 md:left-0 top-0 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-terminal-accent rounded-full border-2 border-terminal transform -translate-x-1/2 sm:-translate-x-1.5 shadow-lg shadow-terminal-accent/50 z-10"></div>
-                
+              <div key={programIndex} className="relative">
                 <div>
                   {/* Program Header */}
                   <div className="mb-4 sm:mb-6 md:mb-8">
@@ -286,60 +282,58 @@ const Timeline = () => {
                         const isLast = milestoneIndex === program.milestones.length - 1;
                         
                         return (
-                          <div key={milestone.id} className="relative">
-                            {/* Connector line from this milestone to the next - starts from icon center, extends to next icon center */}
+                          <div key={milestone.id} className="relative flex gap-3 sm:gap-4 md:gap-6">
+                            {/* Vertical connector line from this milestone icon to the next */}
                             {!isLast && (
-                              <div className="absolute left-4 sm:left-6 top-4 sm:top-6 w-0.5 bg-terminal-dim/30" style={{ bottom: '-1rem' }}></div>
+                              <div className="absolute left-[20px] sm:left-6 top-10 sm:top-12 w-0.5 h-full bg-terminal-dim/30 z-0"></div>
                             )}
                             
-                            <div className="flex gap-3 sm:gap-4 md:gap-6 relative z-10">
-                              {/* Icon */}
-                              <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center transition-colors relative z-20 bg-terminal ${
-                                status === 'na' 
-                                  ? 'border border-terminal-dim' 
-                                  : status === 'completed'
-                                  ? 'border border-emerald-500'
-                                  : status === 'ongoing'
-                                  ? 'border border-cyan-500'
-                                  : 'border border-terminal-accent'
-                              }`}>
-                                <Icon 
-                                  size={18} 
-                                  className={`sm:w-5 sm:h-5 ${
-                                    status === 'na' ? 'text-terminal-dim' : 
-                                    status === 'completed' ? 'text-emerald-400' :
-                                    status === 'ongoing' ? 'text-cyan-400' :
-                                    'text-terminal-accent'
-                                  }`}
-                                />
-                              </div>
-                              
-                              {/* Content */}
-                              <div className="flex-1 pb-4 sm:pb-6 min-w-0">
-                                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
-                                  <div className="min-w-0 flex-1">
-                                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-terminal-text mb-1 break-words">
-                                      {milestone.title}
-                                    </h3>
-                                    <div className="flex items-center gap-1.5 sm:gap-2 mb-2 flex-wrap">
-                                      <Clock size={12} className="text-terminal-dim sm:w-3.5 sm:h-3.5 flex-shrink-0" />
-                                      <span className={`text-xs sm:text-sm font-medium break-words ${
-                                        milestone.date === 'NA' ? 'text-terminal-dim' : 'text-terminal-accent'
-                                      }`}>
-                                        {milestone.date}
-                                      </span>
-                                    </div>
+                            {/* Icon */}
+                            <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center transition-colors relative z-20 bg-terminal ${
+                              status === 'na' 
+                                ? 'border border-terminal-dim' 
+                                : status === 'completed'
+                                ? 'border border-emerald-500'
+                                : status === 'ongoing'
+                                ? 'border border-cyan-500'
+                                : 'border border-terminal-accent'
+                            }`}>
+                              <Icon 
+                                size={18} 
+                                className={`sm:w-5 sm:h-5 ${
+                                  status === 'na' ? 'text-terminal-dim' : 
+                                  status === 'completed' ? 'text-emerald-400' :
+                                  status === 'ongoing' ? 'text-cyan-400' :
+                                  'text-terminal-accent'
+                                }`}
+                              />
+                            </div>
+                            
+                            {/* Content */}
+                            <div className="flex-1 pb-4 sm:pb-6 min-w-0 relative z-10">
+                              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                                <div className="min-w-0 flex-1">
+                                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-terminal-text mb-1 break-words">
+                                    {milestone.title}
+                                  </h3>
+                                  <div className="flex items-center gap-1.5 sm:gap-2 mb-2 flex-wrap">
+                                    <Clock size={12} className="text-terminal-dim sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+                                    <span className={`text-xs sm:text-sm font-medium break-words ${
+                                      milestone.date === 'NA' ? 'text-terminal-dim' : 'text-terminal-accent'
+                                    }`}>
+                                      {milestone.date}
+                                    </span>
                                   </div>
-                                  <span className={`inline-flex items-center px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-xs font-semibold border flex-shrink-0 ${getStatusColor(status)}`}>
-                                    {getStatusLabel(status)}
-                                  </span>
                                 </div>
-                                <p className={`text-xs sm:text-sm break-words ${
-                                  milestone.description === 'NA' ? 'text-terminal-dim italic' : 'text-terminal-dim'
-                                }`}>
-                                  {milestone.description}
-                                </p>
+                                <span className={`inline-flex items-center px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-xs font-semibold border flex-shrink-0 ${getStatusColor(status)}`}>
+                                  {getStatusLabel(status)}
+                                </span>
                               </div>
+                              <p className={`text-xs sm:text-sm break-words ${
+                                milestone.description === 'NA' ? 'text-terminal-dim italic' : 'text-terminal-dim'
+                              }`}>
+                                {milestone.description}
+                              </p>
                             </div>
                           </div>
                         );
